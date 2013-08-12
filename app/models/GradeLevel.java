@@ -10,34 +10,34 @@ import java.util.List;
 public class GradeLevel {
   private long id;
   private String name;
-  
+
   public GradeLevel(long id, String name) {
     this.id = id;
     this.name = name;
   }
-  
+
   public void setId(long id) {
     this.id = id;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }
-  
+
   public long getId() {
     return id;
   }
-  
+
   public String getName() {
     return name;
   }
 
   /**
-   * @return A list of level names in sorted order. 
+   * @return A list of level names in sorted order.
    */
   public static List<String> getNameList() {
     String[] nameArray = {"Freshman", "Sophomore", "Junior", "Senior", "Other"};
-    return Arrays.asList(nameArray);    
+    return Arrays.asList(nameArray);
   }
 
   /**
@@ -53,19 +53,19 @@ public class GradeLevel {
     }
     return null;
   }
-  
+
   public static GradeLevel getDefaultLevel() {
     return findLevel("Freshman");
   }
-  
+
   @Override
   public String toString() {
     return String.format("[GradeLevel %s]", this.name);
   }
-  
-  // Fake a database of Grade Levels. 
+
+  // Fake a database of Grade Levels.
   private static List<GradeLevel> allLevels = new ArrayList<>();
-  
+
   static {
     allLevels.add(new GradeLevel(1L, "Freshman"));
     allLevels.add(new GradeLevel(2L, "Sophomore"));
@@ -73,6 +73,6 @@ public class GradeLevel {
     allLevels.add(new GradeLevel(4L, "Senior"));
     allLevels.add(new GradeLevel(5L, "Other"));
   }
-  
+
 
 }

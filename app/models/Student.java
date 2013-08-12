@@ -1,13 +1,7 @@
 package models;
 
-import play.data.validation.Constraints.Required;
-import play.data.validation.ValidationError;
-import scala.annotation.meta.field;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Simple model class used for form data manipulation.
@@ -15,15 +9,11 @@ import java.util.Map;
 public class Student {
   private long id;
 
-  @Required
-  private String name = "";
-  @Required
-  private String password = "";
+  private String name;
+  private String password;
   private List<Hobby> hobbies = new ArrayList<>(); // Hobbies are optional.
-  @Required
-  private GradeLevel level = null;
-  @Required
-  private GradePointAverage gpa = null;
+  private GradeLevel level;
+  private GradePointAverage gpa;
   private List<Major> majors = new ArrayList<>(); // Majors are optional.
 
   public Student() {
@@ -35,52 +25,6 @@ public class Student {
     this.password = password;
     this.level = level;
     this.gpa = gpa;
-  }
-
-  /**
-   * Validates Form<Student>
-   *
-   * @return list of errors
-   */
-  public List<ValidationError> validate() {
-
-    List<ValidationError> errors = new ArrayList();
-
-    // Password must be at least 5 characters
-    if (password.length() < 5) {
-      errors.add(new ValidationError("password", "A password of at least five characters is required."));
-    }
-
-    // Hobbies are Optional, but if supplied must exist in database.
-    if (hobbies.size() > 0) {
-      for (Hobby hobby : hobbies) {
-        if (Hobby.findHobby(hobby.getName()) == null) {
-          errors.add(new ValidationError("Hobbies", "Supplied hobby is not defined."));
-        }
-      }
-    }
-
-    // Process Grade Level. Required and must exist in database.
-
-    if (GradeLevel.findLevel(level.getName()) == null) {
-      errors.add(new ValidationError("Level", "Supplied grade level is not defined."));
-    }
-
-    // Process GPA. Required and must exist in database.
-    if (GradePointAverage.findGPA(gpa.getName()) == null) {
-      errors.add(new ValidationError("GPA", "Supplied GPA is not defined."));
-    }
-
-    // Process Majors. Optional, but if supplied must exist in database.
-    if (majors.size() > 0) {
-      for (Major major : majors) {
-        if (Major.findMajor(major.getName()) == null) {
-          errors.add(new ValidationError("Major", "Supplied major is not defined."));
-        }
-      }
-    }
-
-    return errors;
   }
 
   public boolean hasHobby(String hobbyName) {
@@ -185,7 +129,15 @@ public class Student {
   // Fake a database of students.
   private static List<Student> allStudents = new ArrayList<>();
 
-  public static Student findStudent(long id) {
+  public static assemblies.Student findStudent(long id) {
+    for (Student student : allStudents) {
+      if (student.id == id) {
+        return new assemblies.Student(student.name, student.password, student.level, student.gpa, student.hobbies, student.majors);
+      }
+    }
+    throw new RuntimeException("Couldn't find student");
+  }
+  public static Student getById(long id) {
     for (Student student : allStudents) {
       if (student.id == id) {
         return student;
@@ -199,10 +151,10 @@ public class Student {
     allStudents.add(new Student(1L, "Joe Good", "mypassword", GradeLevel.findLevel("Freshman"), GradePointAverage.findGPA("4.0")));
     // Valid student with optional data.
     allStudents.add(new Student(2L, "Alice Good", "mypassword", GradeLevel.findLevel("Sophomore"), GradePointAverage.findGPA("4.0")));
-    findStudent(2L).addHobby(Hobby.findHobby("Biking"));
-    findStudent(2L).addHobby(Hobby.findHobby("Surfing"));
-    findStudent(2L).addMajor(Major.findMajor("Chemistry"));
-    findStudent(2L).addMajor(Major.findMajor("Physics"));
+    getById(2L).addHobby(Hobby.findHobby("Biking"));
+    getById(2L).addHobby(Hobby.findHobby("Surfing"));
+    getById(2L).addMajor(Major.findMajor("Chemistry"));
+    getById(2L).addMajor(Major.findMajor("Physics"));
     // Invalid student. Password is too short.
     allStudents.add(new Student(3L, "Frank Bad", "pass", GradeLevel.findLevel("Freshman"), GradePointAverage.findGPA("4.0")));
   }
