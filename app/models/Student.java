@@ -1,5 +1,9 @@
 package models;
 
+import play.data.validation.Constraints.Required;
+import play.data.validation.ValidationError;
+import scala.annotation.meta.field;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +14,15 @@ import java.util.Map;
  */
 public class Student {
   private long id;
-  private Map<String, String> errorMap = new HashMap<>();
+
+  @Required
   private String name = "";
+  @Required
   private String password = "";
   private List<Hobby> hobbies = new ArrayList<>(); // Hobbies are optional.
+  @Required
   private GradeLevel level = null;
+  @Required
   private GradePointAverage gpa = null;
   private List<Major> majors = new ArrayList<>(); // Majors are optional.
 
@@ -30,99 +38,49 @@ public class Student {
   }
 
   /**
-   * Creates a returns a new Student instance initialized from formValues. If problems occur during
-   * binding, the errorMap field reports the problem(s). Use hasErrors() to check if this instance
-   * is valid or not.
-   * 
-   * @param formValues The values retrieved from the form.
-   * @return A student instance.
+   * Validates Form<Student>
+   *
+   * @return list of errors
    */
-  public static Student makeInstance(Map<String, String[]> formValues) {
-    //System.out.println("Form values: " + formValues);
-    Student student = new Student();
+  public List<ValidationError> validate() {
 
-    // Process Name field: required
-    if (formValues.containsKey("Name") && formValues.get("Name")[0].length() > 0) {
-      student.setName(formValues.get("Name")[0]);
-    }
-    else {
-      student.getErrorMap().put("Name", "A name is required.");
+    List<ValidationError> errors = new ArrayList();
+
+    // Password must be at least 5 characters
+    if (password.length() < 5) {
+      errors.add(new ValidationError("password", "A password of at least five characters is required."));
     }
 
-    // Process Password field: required and length >= 5
-    if (formValues.containsKey("Password") && formValues.get("Password")[0].length() >= 5) {
-      student.setPassword(formValues.get("Password")[0]);
-    }
-    else {
-      student.getErrorMap().put("Password", "A password of at least five characters is required.");
-    }
-
-    // Process Hobbies. Optional, but if supplied must exist in database.
-    student.hobbies = new ArrayList<Hobby>();
-    if (formValues.containsKey("Hobbies[]")) {
-      for (String hobbyName : formValues.get("Hobbies[]")) {
-        Hobby hobby = Hobby.findHobby(hobbyName);
-        if (hobby == null) {
-          student.getErrorMap().put("Hobbies", "Supplied hobby is not defined.");
-        }
-        else {
-          student.hobbies.add(hobby);
+    // Hobbies are Optional, but if supplied must exist in database.
+    if (hobbies.size() > 0) {
+      for (Hobby hobby : hobbies) {
+        if (Hobby.findHobby(hobby.getName()) == null) {
+          errors.add(new ValidationError("Hobbies", "Supplied hobby is not defined."));
         }
       }
     }
 
     // Process Grade Level. Required and must exist in database.
-    if (!formValues.containsKey("Level")) {
-      student.getErrorMap().put("Level", "Grade Level must be supplied.");
+
+    if (GradeLevel.findLevel(level.getName()) == null) {
+      errors.add(new ValidationError("Level", "Supplied grade level is not defined."));
     }
-    else {
-      String levelName = formValues.get("Level")[0];
-      GradeLevel level = GradeLevel.findLevel(levelName);
-      if (level == null) {
-        student.getErrorMap().put("Level", "Supplied grade level is not defined.");
-      }
-      else {
-        student.level = level;
-      }
-    }
-    
+
     // Process GPA. Required and must exist in database.
-    if (!formValues.containsKey("GPA")) {
-      student.getErrorMap().put("GPA", "GPA must be supplied.");
+    if (GradePointAverage.findGPA(gpa.getName()) == null) {
+      errors.add(new ValidationError("GPA", "Supplied GPA is not defined."));
     }
-    else {
-      String gpaName = formValues.get("GPA")[0];
-      GradePointAverage gpa = GradePointAverage.findGPA(gpaName);
-      if (gpa == null) {
-        student.getErrorMap().put("GPA", "Supplied GPA is not defined.");
-      }
-      else {
-        student.gpa = gpa;
-      }
-    }
-    
+
     // Process Majors. Optional, but if supplied must exist in database.
-    student.majors = new ArrayList<Major>();
-    if (formValues.containsKey("Majors")) {
-      for (String majorName : formValues.get("Majors")) {
-        Major major = Major.findMajor(majorName);
-        if (major == null) {
-          student.getErrorMap().put("Major", "Supplied major is not defined.");
-        }
-        else {
-          student.majors.add(major);
+    if (majors.size() > 0) {
+      for (Major major : majors) {
+        if (Major.findMajor(major.getName()) == null) {
+          errors.add(new ValidationError("Major", "Supplied major is not defined."));
         }
       }
     }
 
-    return student;
-  }
-
-  /**
-   * @return True if this instance has an invalid state.
-   */
-  public boolean hasErrors() {
-    return !this.getErrorMap().isEmpty();
+    return errors;
   }
 
   public boolean hasHobby(String hobbyName) {
@@ -132,7 +90,7 @@ public class Student {
     }
     return false;
   }
-  
+
   public void addHobby(Hobby hobby) {
     this.hobbies.add(hobby);
   }
@@ -148,18 +106,6 @@ public class Student {
   public String toString() {
     return String.format("[Student name: '%s' Password: '%s' Hobbies: %s Grade Level: %s GPA: %s Majors: %s]", this.getName(),
         this.getPassword(), this.hobbies, this.level, this.gpa, this.getMajors());
-  }
-
-  /**
-   * @return the errorMap
-   */
-  public Map<String, String> getErrorMap() {
-    return errorMap;
-  }
-
-  public String getError(String errorName) {
-    String msg = this.errorMap.get(errorName);
-    return (msg == null) ? "" : msg;
   }
 
   /**
@@ -235,10 +181,10 @@ public class Student {
   public void addMajor(Major major) {
     this.majors.add(major);
   }
-  
-  // Fake a database of students. 
+
+  // Fake a database of students.
   private static List<Student> allStudents = new ArrayList<>();
-  
+
   public static Student findStudent(long id) {
     for (Student student : allStudents) {
       if (student.id == id) {
@@ -247,7 +193,7 @@ public class Student {
     }
     throw new RuntimeException("Couldn't find student");
   }
-  
+
   static {
     // Valid student. No optional data supplied.
     allStudents.add(new Student(1L, "Joe Good", "mypassword", GradeLevel.findLevel("Freshman"), GradePointAverage.findGPA("4.0")));
