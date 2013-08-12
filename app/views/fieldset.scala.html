@@ -1,7 +1,10 @@
-@(studentForm: Form[Student])
+@(studentForm: Form[assemblies.Student],
+  hobbies:Map[String,Boolean],
+  levels:List[String],
+  gpa:Map[String,Boolean],
+  majors:Map[String,Boolean])
 
-@import helper._
-@import helper.twitterBootstrap._
+@import bootstrap._
 
 <fieldset>
   <!-- Header -->
@@ -9,35 +12,45 @@
     <legend>Student Data</legend>
   </div>
 
-  @inputText(studentForm("name"))
+   <!-- Name -->
+  @text(
+    studentForm("name"),
+    label = "Name",
+    placeholder = "My Name",
+    help = "Please enter your first and last name. (required)")
 
-  @inputPassword(studentForm("password"))
+  <!-- Password -->
+  @password(
+    studentForm("password"),
+    "Password",
+    "",
+    "Password must be five or more characters. (required)")
 
-  @for((name, isChecked) <- Hobby.makeHobbyMap(studentForm.get)) {
-    <label class="checkbox inline">
-      <input type="checkbox" name="@(name + "[]")" id="@name" value="@name" @if(isChecked) {checked}>
-      @name
-    </label>
-  }
+   <!-- Hobbies -->
+  @checkboxes(studentForm("hobbies"),
+    "Hobbies",
+    hobbies,
+    "Check zero or more hobbies. (optional)")
 
-  @for(level <- Hobby.makeHobbyMap(studentForm.get)) {
-  <label class="radio">
-    <input type="radio" name="level" id="@level" value="@level" @if(level == activeCheckedButton) {checked} >@level
-  </label>
-  }
+  <!-- Grade Level -->
+  @radiobuttons(studentForm("level"),
+    "Level",
+    levels,
+    "Select your grade level. (required)")
 
-  <select id="grades" name="grades" @if(isMultiple) {multiple="multiple"}>
-    @if(!isMultiple) {<option class="blank" value="">Please select a value</option>}
-    @for((grade, isSelected) <- GradePointAverage.makeGPAMap(student)) {
-      <option value="@grade" @if(isSelected) {selected}>@grade</option>
-    }
-  </select>
-  <select id="majors" name="majors" @if(isMultiple) {multiple="multiple"}>
-    @if(!isMultiple) {<option class="blank" value="">Please select a value</option>}
-    @for((major, isSelected) <- Major.makeMajorMap(student)) {
-      <option value="@major" @if(isSelected) {selected}>@major</option>
-    }
-  </select>
+  <!-- GPA -->
+  @select(studentForm("gpa"),
+    "GPA",
+    gpa,
+    false,
+    "Select your GPA. (required)")
+
+  <!-- Majors -->
+  @select(studentForm("majors"),
+    "Majors",
+    majors,
+    true,
+    "Select zero or more majors. (optional)")
 
   <div class="control-group">
     <div class="controls">
