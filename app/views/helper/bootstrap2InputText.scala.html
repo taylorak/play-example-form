@@ -21,9 +21,15 @@
 @inputError = @{ args.toMap.get('error).getOrElse("") }
 
   <div class="control-group @if(!inputError.isEmpty) {error}">
-    <label class="control-label" for="@field">@field</label>
+    <label class="control-label">@field</label>
     <div class="controls">
-      <input class="@inputClass" type="@inputType" id="@inputId" name="@inputName" value="@inputValue" placeholder="@inputPlaceholder">
+      <input
+        class="@inputClass"
+        type="@inputType"
+        id="@inputId"
+        name="@inputName"
+        value="@inputValue"
+        placeholder="@inputPlaceholder" />
       <p class="help-block">@inputHelp</p>
       <p class="help-block">@inputError</p>
     </div>

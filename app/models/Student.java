@@ -33,7 +33,7 @@ public class Student {
    * Creates a returns a new Student instance initialized from formValues. If problems occur during
    * binding, the errorMap field reports the problem(s). Use hasErrors() to check if this instance
    * is valid or not.
-   * 
+   *
    * @param formValues The values retrieved from the form.
    * @return A student instance.
    */
@@ -85,7 +85,7 @@ public class Student {
         student.level = level;
       }
     }
-    
+
     // Process GPA. Required and must exist in database.
     if (!formValues.containsKey("GPA")) {
       student.getErrorMap().put("GPA", "GPA must be supplied.");
@@ -100,7 +100,7 @@ public class Student {
         student.gpa = gpa;
       }
     }
-    
+
     // Process Majors. Optional, but if supplied must exist in database.
     student.majors = new ArrayList<Major>();
     if (formValues.containsKey("Majors")) {
@@ -132,7 +132,7 @@ public class Student {
     }
     return false;
   }
-  
+
   public void addHobby(Hobby hobby) {
     this.hobbies.add(hobby);
   }
@@ -235,10 +235,10 @@ public class Student {
   public void addMajor(Major major) {
     this.majors.add(major);
   }
-  
-  // Fake a database of students. 
+
+  // Fake a database of students.
   private static List<Student> allStudents = new ArrayList<>();
-  
+
   public static Student findStudent(long id) {
     for (Student student : allStudents) {
       if (student.id == id) {
@@ -247,7 +247,7 @@ public class Student {
     }
     throw new RuntimeException("Couldn't find student");
   }
-  
+
   static {
     // Valid student. No optional data supplied.
     allStudents.add(new Student(1L, "Joe Good", "mypassword", GradeLevel.findLevel("Freshman"), GradePointAverage.findGPA("4.0")));

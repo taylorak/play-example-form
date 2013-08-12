@@ -12,28 +12,28 @@ import java.util.TreeMap;
 public class GradePointAverage {
   private long id;
   private String name;
-  
+
   public GradePointAverage(long id, String name) {
     this.id = id;
     this.name = name;
   }
-  
+
   public void setId(long id) {
     this.id = id;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }
-  
+
   public long getId() {
     return id;
   }
-  
+
   public String getName() {
     return name;
   }
-  
+
   /**
    * Create a map of GPA name -> boolean where the boolean is true if the GPA corresponds to the student.
    * @param student A student with a GPA.
@@ -48,11 +48,11 @@ public class GradePointAverage {
   }
 
   /**
-   * @return A list of GPA ranges in sorted order. 
+   * @return A list of GPA ranges in sorted order.
    */
   public static List<String> getGPAList() {
     String[] nameArray = {"4.0", "3.0 - 3.9", "2.0 - 2.9", "1.0 - 1.9"};
-    return Arrays.asList(nameArray);    
+    return Arrays.asList(nameArray);
   }
 
   /**
@@ -68,19 +68,19 @@ public class GradePointAverage {
     }
     return null;
   }
-  
+
   public static GradePointAverage getDefaultGPA() {
     return findGPA("4.0");
   }
-  
+
   @Override
   public String toString() {
     return String.format("[GPA %s]", this.name);
   }
-  
-  // Fake a database of Grade Levels. 
+
+  // Fake a database of Grade Levels.
   private static List<GradePointAverage> allGPAs = new ArrayList<>();
-  
+
   static {
     allGPAs.add(new GradePointAverage(1L, "4.0"));
     allGPAs.add(new GradePointAverage(2L, "3.0 - 3.9"));
@@ -88,6 +88,6 @@ public class GradePointAverage {
     allGPAs.add(new GradePointAverage(4L, "1.0 - 1.9"));
 
   }
-  
+
 
 }
