@@ -1,0 +1,48 @@
+@(studentForm: Form[Student])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+<fieldset>
+  <!-- Header -->
+  <div id="legend">
+    <legend>Student Data</legend>
+  </div>
+
+  @inputText(studentForm("name"))
+
+  @inputPassword(studentForm("password"))
+
+  @for((name, isChecked) <- Hobby.makeHobbyMap(studentForm.get)) {
+    <label class="checkbox inline">
+      <input type="checkbox" name="@(name + "[]")" id="@name" value="@name" @if(isChecked) {checked}>
+      @name
+    </label>
+  }
+
+  @for(level <- Hobby.makeHobbyMap(studentForm.get)) {
+  <label class="radio">
+    <input type="radio" name="level" id="@level" value="@level" @if(level == activeCheckedButton) {checked} >@level
+  </label>
+  }
+
+  <select id="grades" name="grades" @if(isMultiple) {multiple="multiple"}>
+    @if(!isMultiple) {<option class="blank" value="">Please select a value</option>}
+    @for((grade, isSelected) <- GradePointAverage.makeGPAMap(student)) {
+      <option value="@grade" @if(isSelected) {selected}>@grade</option>
+    }
+  </select>
+  <select id="majors" name="majors" @if(isMultiple) {multiple="multiple"}>
+    @if(!isMultiple) {<option class="blank" value="">Please select a value</option>}
+    @for((major, isSelected) <- Major.makeMajorMap(student)) {
+      <option value="@major" @if(isSelected) {selected}>@major</option>
+    }
+  </select>
+
+  <div class="control-group">
+    <div class="controls">
+      <button class="btn btn-success">Submit</button>
+      <button class="btn cancel">Cancel</button>
+    </div>
+  </div>
+</fieldset>
