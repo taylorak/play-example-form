@@ -40,10 +40,10 @@ public class Hobby {
    * with all unchecked boxes.
    * @return A map of hobby names to booleans indicating the hobbies associated with the student.
    */
-  public static Map<String, Boolean> makeHobbyMap(Student student) {
+  public static Map<String, Boolean> makeHobbyMap(assemblies.Student student) {
     Map<String, Boolean> hobbyMap = new HashMap<String, Boolean>();
     for (Hobby hobby : allHobbies) {
-      hobbyMap.put(hobby.getName(),  (student == null) ? false : student.hasHobby(hobby.getName()));
+      hobbyMap.put(hobby.getName(), (student != null && student.hobbies.contains(hobby.getName())));
     }
     return hobbyMap;
   }

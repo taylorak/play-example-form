@@ -40,10 +40,10 @@ public class Major {
    * with all unchecked boxes.
    * @return A map of Major names to booleans indicating the majors associated with the student.
    */
-  public static Map<String, Boolean> makeMajorMap(Student student) {
+  public static Map<String, Boolean> makeMajorMap(assemblies.Student student) {
     Map<String, Boolean> majorMap = new HashMap<String, Boolean>();
     for (Major major : allMajors) {
-      majorMap.put(major.getName(),  (student == null) ? false : student.hasMajor(major.getName()));
+      majorMap.put(major.getName(),  (student == null) ? false : student.majors.contains(major.getName()));
     }
     return majorMap;
   }

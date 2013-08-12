@@ -1,0 +1,61 @@
+@(studentForm: Form[assemblies.Student],
+  hobbies:Map[String,Boolean],
+  levels:List[String],
+  gpa:Map[String,Boolean],
+  majors:Map[String,Boolean])
+
+@import bootstrap._
+
+<fieldset>
+  <!-- Header -->
+  <div id="legend">
+    <legend>Student Data</legend>
+  </div>
+
+   <!-- Name -->
+  @text(
+    studentForm("name"),
+    label = "Name",
+    placeholder = "My Name",
+    help = "Please enter your first and last name. (required)")
+
+  <!-- Password -->
+  @password(
+    studentForm("password"),
+    "Password",
+    "",
+    "Password must be five or more characters. (required)")
+
+   <!-- Hobbies -->
+  @checkboxes(studentForm("hobbies"),
+    "Hobbies",
+    hobbies,
+    "Check zero or more hobbies. (optional)")
+
+  <!-- Grade Level -->
+  @radiobuttons(studentForm("level"),
+    "Level",
+    levels,
+    "Select your grade level. (required)")
+
+  <!-- GPA -->
+  @select(studentForm("gpa"),
+    "GPA",
+    gpa,
+    false,
+    "Select your GPA. (required)")
+
+  <!-- Majors -->
+  @select(studentForm("majors"),
+    "Majors",
+    majors,
+    true,
+    "Select zero or more majors. (optional)")
+
+  <div class="control-group">
+    <div class="controls">
+      <button class="btn btn-success">Submit</button>
+      <button class="btn cancel">Cancel</button>
+    </div>
+  </div>
+</fieldset>

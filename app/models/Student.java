@@ -1,21 +1,19 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Simple model class used for form data manipulation.
  */
 public class Student {
   private long id;
-  private Map<String, String> errorMap = new HashMap<>();
-  private String name = "";
-  private String password = "";
+
+  private String name;
+  private String password;
   private List<Hobby> hobbies = new ArrayList<>(); // Hobbies are optional.
-  private GradeLevel level = null;
-  private GradePointAverage gpa = null;
+  private GradeLevel level;
+  private GradePointAverage gpa;
   private List<Major> majors = new ArrayList<>(); // Majors are optional.
 
   public Student() {
@@ -27,102 +25,6 @@ public class Student {
     this.password = password;
     this.level = level;
     this.gpa = gpa;
-  }
-
-  /**
-   * Creates a returns a new Student instance initialized from formValues. If problems occur during
-   * binding, the errorMap field reports the problem(s). Use hasErrors() to check if this instance
-   * is valid or not.
-   *
-   * @param formValues The values retrieved from the form.
-   * @return A student instance.
-   */
-  public static Student makeInstance(Map<String, String[]> formValues) {
-    //System.out.println("Form values: " + formValues);
-    Student student = new Student();
-
-    // Process Name field: required
-    if (formValues.containsKey("Name") && formValues.get("Name")[0].length() > 0) {
-      student.setName(formValues.get("Name")[0]);
-    }
-    else {
-      student.getErrorMap().put("Name", "A name is required.");
-    }
-
-    // Process Password field: required and length >= 5
-    if (formValues.containsKey("Password") && formValues.get("Password")[0].length() >= 5) {
-      student.setPassword(formValues.get("Password")[0]);
-    }
-    else {
-      student.getErrorMap().put("Password", "A password of at least five characters is required.");
-    }
-
-    // Process Hobbies. Optional, but if supplied must exist in database.
-    student.hobbies = new ArrayList<Hobby>();
-    if (formValues.containsKey("Hobbies[]")) {
-      for (String hobbyName : formValues.get("Hobbies[]")) {
-        Hobby hobby = Hobby.findHobby(hobbyName);
-        if (hobby == null) {
-          student.getErrorMap().put("Hobbies", "Supplied hobby is not defined.");
-        }
-        else {
-          student.hobbies.add(hobby);
-        }
-      }
-    }
-
-    // Process Grade Level. Required and must exist in database.
-    if (!formValues.containsKey("Level")) {
-      student.getErrorMap().put("Level", "Grade Level must be supplied.");
-    }
-    else {
-      String levelName = formValues.get("Level")[0];
-      GradeLevel level = GradeLevel.findLevel(levelName);
-      if (level == null) {
-        student.getErrorMap().put("Level", "Supplied grade level is not defined.");
-      }
-      else {
-        student.level = level;
-      }
-    }
-
-    // Process GPA. Required and must exist in database.
-    if (!formValues.containsKey("GPA")) {
-      student.getErrorMap().put("GPA", "GPA must be supplied.");
-    }
-    else {
-      String gpaName = formValues.get("GPA")[0];
-      GradePointAverage gpa = GradePointAverage.findGPA(gpaName);
-      if (gpa == null) {
-        student.getErrorMap().put("GPA", "Supplied GPA is not defined.");
-      }
-      else {
-        student.gpa = gpa;
-      }
-    }
-
-    // Process Majors. Optional, but if supplied must exist in database.
-    student.majors = new ArrayList<Major>();
-    if (formValues.containsKey("Majors")) {
-      for (String majorName : formValues.get("Majors")) {
-        Major major = Major.findMajor(majorName);
-        if (major == null) {
-          student.getErrorMap().put("Major", "Supplied major is not defined.");
-        }
-        else {
-          student.majors.add(major);
-        }
-      }
-    }
-
-    return student;
-  }
-
-  /**
-   * @return True if this instance has an invalid state.
-   */
-  public boolean hasErrors() {
-    return !this.getErrorMap().isEmpty();
   }
 
   public boolean hasHobby(String hobbyName) {
@@ -148,18 +50,6 @@ public class Student {
   public String toString() {
     return String.format("[Student name: '%s' Password: '%s' Hobbies: %s Grade Level: %s GPA: %s Majors: %s]", this.getName(),
         this.getPassword(), this.hobbies, this.level, this.gpa, this.getMajors());
-  }
-
-  /**
-   * @return the errorMap
-   */
-  public Map<String, String> getErrorMap() {
-    return errorMap;
-  }
-
-  public String getError(String errorName) {
-    String msg = this.errorMap.get(errorName);
-    return (msg == null) ? "" : msg;
   }
 
   /**
@@ -239,7 +129,15 @@ public class Student {
   // Fake a database of students.
   private static List<Student> allStudents = new ArrayList<>();
 
-  public static Student findStudent(long id) {
+  public static assemblies.Student findStudent(long id) {
+    for (Student student : allStudents) {
+      if (student.id == id) {
+        return new assemblies.Student(student.name, student.password, student.level, student.gpa, student.hobbies, student.majors);
+      }
+    }
+    throw new RuntimeException("Couldn't find student");
+  }
+  public static Student getById(long id) {
     for (Student student : allStudents) {
       if (student.id == id) {
         return student;
@@ -253,10 +151,10 @@ public class Student {
     allStudents.add(new Student(1L, "Joe Good", "mypassword", GradeLevel.findLevel("Freshman"), GradePointAverage.findGPA("4.0")));
     // Valid student with optional data.
     allStudents.add(new Student(2L, "Alice Good", "mypassword", GradeLevel.findLevel("Sophomore"), GradePointAverage.findGPA("4.0")));
-    findStudent(2L).addHobby(Hobby.findHobby("Biking"));
-    findStudent(2L).addHobby(Hobby.findHobby("Surfing"));
-    findStudent(2L).addMajor(Major.findMajor("Chemistry"));
-    findStudent(2L).addMajor(Major.findMajor("Physics"));
+    getById(2L).addHobby(Hobby.findHobby("Biking"));
+    getById(2L).addHobby(Hobby.findHobby("Surfing"));
+    getById(2L).addMajor(Major.findMajor("Chemistry"));
+    getById(2L).addMajor(Major.findMajor("Physics"));
     // Invalid student. Password is too short.
     allStudents.add(new Student(3L, "Frank Bad", "pass", GradeLevel.findLevel("Freshman"), GradePointAverage.findGPA("4.0")));
   }

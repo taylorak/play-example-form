@@ -39,10 +39,10 @@ public class GradePointAverage {
    * @param student A student with a GPA.
    * @return A map of GPA to boolean indicating which one is the student's GPA.
    */
-  public static Map<String, Boolean> makeGPAMap(Student student) {
+  public static Map<String, Boolean> makeGPAMap(assemblies.Student student) {
     Map<String, Boolean> gpaMap = new TreeMap<String, Boolean>();
     for (GradePointAverage gpa : allGPAs) {
-      gpaMap.put(gpa.getName(),  (student == null) ? false : (student.getGpa() != null && student.getGpa().getName().equals(gpa.getName())));
+      gpaMap.put(gpa.getName(),  (student == null) ? false : (student.gpa != null && student.gpa.equals(gpa.getName())));
     }
     return gpaMap;
   }
