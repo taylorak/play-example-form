@@ -1,7 +1,7 @@
 play-example-form
 =================
 
-![screenshot](https://raw.github.com/philipmjohnson/play-example-form/master/doc/play-form-kludge-homepage.png)
+![screenshot](https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-form-kludge-homepage.png)
 
 
 Overview
