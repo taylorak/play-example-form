@@ -13,44 +13,42 @@
   </div>
 
    <!-- Name -->
-  @text(
-    studentForm("name"),
-    label = "Name",
-    placeholder = "My Name",
-    help = "Please enter your first and last name. (required)")
+  @text(studentForm("name"),
+        label = "Name",
+        placeholder = "My Name",
+        help = "Please enter your first and last name. (required)")
 
   <!-- Password -->
-  @password(
-    studentForm("password"),
-    "Password",
-    "",
-    "Password must be five or more characters. (required)")
+  @password(studentForm("password"),
+            "Password",
+            "",
+            "Password must be five or more characters. (required)")
 
    <!-- Hobbies -->
   @checkboxes(studentForm("hobbies"),
-    "Hobbies",
-    hobbies,
-    "Check zero or more hobbies. (optional)")
+              "Hobbies",
+              hobbies,
+              "Check zero or more hobbies. (optional)")
 
   <!-- Grade Level -->
   @radiobuttons(studentForm("level"),
-    "Level",
-    levels,
-    "Select your grade level. (required)")
+                "Level",
+                levels,
+                "Select your grade level. (required)")
 
   <!-- GPA -->
   @select(studentForm("gpa"),
-    "GPA",
-    gpa,
-    false,
-    "Select your GPA. (required)")
+          "GPA",
+          gpa,
+          false,
+          "Select your GPA. (required)")
 
   <!-- Majors -->
   @select(studentForm("majors"),
-    "Majors",
-    majors,
-    true,
-    "Select zero or more majors. (optional)")
+          "Majors",
+          majors,
+          true,
+          "Select zero or more majors. (optional)")
 
   <div class="control-group">
     <div class="controls">

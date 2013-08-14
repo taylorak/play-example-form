@@ -1,20 +1,20 @@
 play-example-form
 =================
 
-![screenshot](https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-form-kludge-homepage.png)
+![screenshot](https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-homepage.png)
 
 
 Overview
 --------
 
-This application provides an example of form processing slightly different 
-from the play example programs (forms and computer database) that demonstrates the following 
-requirements:
+This application provides an example of form processing with the following features:
 
-  * Use of Twitter Bootstrap.
-  * Use of multi-valued form controls (checkboxes and multi-select)
-  * Use of a backing entity with nested entity and List of entity fields.
-  * Validation.
+  * [WebJars](http://www.webjars.org/) to download dependencies.
+  * [Twitter Bootstrap 2.3.2](http://getbootstrap.com/2.3.2/)
+  * Multiple twitter bootstrap-specific [helper templates](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap)
+  * Use of multi-valued form controls ([checkboxes](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/bootstrap/checkboxes.scala.html) and [multi-select](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/bootstrap/select.scala.html))
+  * Separation of the form's [backing class](https://github.com/ics-software-engineering/play-example-form/blob/master/app/assemblies/Student.java) from the [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
+  * [Validation](https://github.com/ics-software-engineering/play-example-form/blob/master/app/assemblies/Student.java#L46-97).
 
     
 Playing with the application
