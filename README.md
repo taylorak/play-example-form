@@ -3,7 +3,6 @@ play-example-form
 
 ![screenshot](https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-homepage.png)
 
-
 Overview
 --------
 
@@ -21,7 +20,7 @@ The design of this example differs in two significant ways from the "standard" P
   1. **Distinct model and form classes.**  Most examples of form processing in Play "overload" the 
      model classes to serve two duties:  (1) specification of the database schema structure; and 
      (2) provide the "backing class" for forms.  Requiring a single class to perform these two duties 
-     works well only when both the models and the forms are simple. In this example system, the
+     works well only when both the models and the forms are both simple and similar in structure. In this example system, the
      views.formdata package provides classes for form processing, and the models package provides
      classes for database schemas.
 

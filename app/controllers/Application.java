@@ -1,6 +1,5 @@
 package controllers;
 
-import assemblies.StudentFormData;
 import models.GradeLevel;
 import models.GradePointAverage;
 import models.Hobby;
@@ -8,6 +7,7 @@ import models.Major;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.formdata.StudentFormData;
 import views.html.index;
 
 /**

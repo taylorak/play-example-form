@@ -1,4 +1,4 @@
-package assemblies;
+package views.formdata;
 
 import models.GradeLevel;
 import models.GradePointAverage;

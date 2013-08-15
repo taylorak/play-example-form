@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import assemblies.StudentFormData;
+import views.formdata.StudentFormData;
 
 /**
  * Represent a student's hobbies.
