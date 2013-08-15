@@ -86,15 +86,15 @@ is where things get most interesting.   The [main](https://github.com/ics-softwa
 and [index](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/index.scala.html)
 templates are pretty much what you'd expect. 
 
-Note that the main template imports jquery which is needed by bootstrap and not normally shown
+Note that the main template imports JQuery which is needed for Bootstrap Javascript components and not normally shown
 in the built-in Play examples. What is really not shown in the built-in Play examples is the 
 fact that in order to test your code with HTMLUnit, you cannot use a version of JQuery more recent than 1.8.3.
 Look at [Build.scala](https://github.com/ics-software-engineering/play-example-form/blob/master/project/Build.scala#L17-19)
-to see how to get a later version of Bootstrap with an older, HTMLUnit-compliant version of JQuery.
+to see how to load a newer version of Bootstrap with an older, HTMLUnit-compliant version of JQuery.
 
 The second thing to review is the [views.bootstrap](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap)
-subpackage, containing bootstrap 2.x scala templates for various form controls. Kudos to Jason
-Pearson to writing these templates and making other helpful changes; your t-shirt awaits.
+subpackage, containing Bootstrap 2.x Scala templates for various form controls. Kudos to [Jason
+Pearson](https://github.com/kaeawc) to writing these templates and making other helpful changes; your t-shirt awaits.
 
 Finally, the [views.formdata](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata)
 subpackage contains the single backing class ([StudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java)) required for this application.      
@@ -126,5 +126,5 @@ Acknowledgements
 ----------------
 
 This example is a descendent of the original [play-form-kludge](https://github.com/philipmjohnson/play-form-kludge/tree/original)
-and [Jason Pearson's very helpful improvements(https://github.com/philipmjohnson/play-form-kludge).
+and [Jason Pearson](https://github.com/kaeawc)'s [very helpful improvements](https://github.com/philipmjohnson/play-form-kludge).
     
