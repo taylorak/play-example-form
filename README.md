@@ -10,18 +10,18 @@ This application provides an example of form processing with the following featu
 
   * [WebJars](http://www.webjars.org/) to download dependencies.
   * [Twitter Bootstrap 2.3.2](http://getbootstrap.com/2.3.2/)
-  * Multiple twitter bootstrap-specific [helper templates](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap)
-  * Use of multi-valued form controls ([checkboxes](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/bootstrap/checkboxes.scala.html) and [multi-select](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/bootstrap/select.scala.html))
-  * Separation of the form's [backing class](https://github.com/ics-software-engineering/play-example-form/blob/master/app/assemblies/StudentFormData.java) from the [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
-  * All validation done through a [validate() method](https://github.com/ics-software-engineering/play-example-form/blob/master/app/assemblies/Student.java#L46-97).
+  * Individual twitter bootstrap-specific [helper templates](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap)
+  * Separation of [form backing classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) from [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
+  * All validation done through a [validate() method](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java#L57-123).
     
 The design of this example differs in two significant ways from the "standard" Play examples. 
 
   1. **Distinct model and form classes.**  Most examples of form processing in Play "overload" the 
-     model classes to serve two duties:  (1) specification of the database schema structure; and 
-     (2) provide the "backing class" for forms.  Requiring a single class to perform these two duties 
-     works well only when both the models and the forms are both simple and similar in structure. In this example system, the
-     views.formdata package provides classes for form processing, and the models package provides
+     model classes to serve two tasks:  (1) specify the database schema structure; and 
+     (2) provide the "backing class" for forms.  Requiring a single class to perform these two tasks
+     works well only when the models and forms are both simple and similar in structure. In this example system, the
+     [views.formdata package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) provides 
+     classes for form processing, and the [models package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models) provides
      classes for database schemas.
 
   2. **Explicit field constructors for Twitter Bootstrap 2.x.**  The canonical recommendation for users of 
