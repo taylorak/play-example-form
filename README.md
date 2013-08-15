@@ -97,7 +97,7 @@ subpackage, containing Bootstrap 2.x Scala templates for various form controls. 
 Pearson](https://github.com/kaeawc) to writing these templates and making other helpful changes; your t-shirt awaits.
 
 Finally, the [views.formdata](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata)
-subpackage contains the single backing class ([StudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java)) required for this application.      
+subpackage contains the single backing class ([StudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java)) required for this application.
 Note that the backing class consists of public fields containing the String data to be displayed/bound in the form,
 as well as a validate() method that determines if the submitted form data is valid or not.
         
@@ -123,7 +123,7 @@ that I can see:
     this kind of simple situation. Maybe that will change in future.
     
 Note: I played around for a while with [Custom Data Binding](http://www.playframework.com/documentation/2.0/JavaForms).
-I could not get it to work. 
+I could not get it to work correctly (i.e. binding and validation) for lists of entities (such as Hobbies). 
     
 Acknowledgements
 ----------------
