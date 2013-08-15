@@ -2,7 +2,7 @@
 
 <div class="control-group @if(field.hasErrors) {error}">
   <label class="control-label" for="@field.id">@label</label>
-  <div class="controls">
+  <div id="@(field.id + "s")" class="controls">
     @for(buttonName <- buttonNameList) {
     <label class="radio">
       <input
