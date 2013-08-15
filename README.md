@@ -26,7 +26,7 @@ The design of this example differs in two significant ways from the "standard" P
 
   2. **Explicit field constructors for Twitter Bootstrap 2.x.**  The canonical recommendation for users of 
      Twitter Bootstrap 2.x is to create an implicit field constructor.  The problem with this recommendation
-     is that a single implicit field constructor cannot satisfy all of Twitter Bootstrap's layout  
+     is that a single implicit field constructor cannot satisfy all of Twitter Bootstrap's layout
      requirements for form controls (for example, multiple checkboxes). This example illustrates
      a more general solution in which normal ("explicit") scala templates are defined in the 
      [views.bootstrap package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap) for each of the Twitter Bootstrap controls. As a side benefit, the 
