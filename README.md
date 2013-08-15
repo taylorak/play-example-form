@@ -48,7 +48,7 @@ same data that you entered.
 
 **Review the controller.**
 
-Now review the controller class [Application](https://github.com/ics-software-engineering/play-example-form/blob/master/app/controllers/Application.java)
+Now review the controller class. [Application](https://github.com/ics-software-engineering/play-example-form/blob/master/app/controllers/Application.java)
 has just two methods: getIndex() which displays the form in the index page and postIndex() that processes a form submission
 from the index page. See the [routes](https://github.com/ics-software-engineering/play-example-form/blob/master/conf/routes) file for how this is wired up.
 
@@ -61,16 +61,16 @@ By looking at the controller, you can see the basic approach for either form dis
 form submission (HTTP POST):
   
   * An instance of StudentFormData is passed to the templates for rendering. This class has public
-    fields as required by Play, and they are all String or List[String] to simplify display.
+    fields as required by Play, and they are all String or List[String] because binding only works on strings.
     
   * Other component entities (Hobby, GradeLevel, GradePointAverage, Major) provide helper methods
-    to support display of their values as Strings along with the student's current value(s) for
+    to support display of their values as strings along with the student's current value(s) for
     those components.
     
   * The [Student.makeInstance](https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L165-185) and [Student.makeStudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L150-162)
     methods provide conversion between the form data and model representations of a Student.
 
-** Review the models. **
+**Review the models.**
 
 Skim through the [models package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models). 
 There should be no surprises; it parallels the form pretty closely.  Some things to note:
@@ -79,7 +79,7 @@ There should be no surprises; it parallels the form pretty closely.  Some things
   
   * The models have private fields and getters/setters. (Sorry, I'm old school that way.)     
 
-** Review the views. **
+**Review the views.**
 
 The [views package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views) 
 is where things get most interesting.   The [main](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/main.scala.html)
