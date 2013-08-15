@@ -50,6 +50,7 @@ public class Application extends Controller {
 
     if (bound.hasErrors()) {
       // Don't call bound.get() if there are any errors. 
+      flash("error", "Please correct errors above.");
       return badRequest(index.render(bound,
         Hobby.makeHobbyMap(null), 
         GradeLevel.getNameList(),
@@ -60,6 +61,7 @@ public class Application extends Controller {
     else {
       // We could convert formData into a Student instance here and save it if we wanted.
       // In this case, we'll just re-render it.
+      flash("success", "Student data submitted successfully");
       return ok(index.render(bound,
         Hobby.makeHobbyMap(bound.get()),
         GradeLevel.getNameList(),
