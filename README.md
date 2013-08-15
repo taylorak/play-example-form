@@ -22,20 +22,21 @@ The design of this example differs in two significant ways from the "standard" P
      works well only when the models and forms are both simple and similar in structure. In this example system, the
      [views.formdata package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) provides 
      classes for form processing, and the [models package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models) provides
-     classes for database schemas.
+     classes for database schemas. Since Play requires the backing classes for forms to have public fields,
+     this separation means that model classes can have private fields, avoiding [well documented problems](http://www.manning-sandbox.com/thread.jspa?messageID=143570&#143570). 
 
   2. **Explicit field constructors for Twitter Bootstrap 2.x.**  The canonical recommendation for users of 
-     Twitter Bootstrap 2.x is to create an implicit field constructor.  The problem with this recommendation
+     Twitter Bootstrap 2.x is to create a single "implicit" field constructor.  The problem with this recommendation
      is that a single implicit field constructor cannot satisfy all of Twitter Bootstrap's layout
      requirements for form controls (for example, multiple checkboxes). This example illustrates
-     a more general solution in which normal ("explicit") scala templates are defined in the 
+     a more general solution in which normal (i.e. "explicit") scala templates (i.e. field constructors) are defined in the 
      [views.bootstrap package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap) for each of the Twitter Bootstrap controls. As a side benefit, the 
      code is significantly easier to understand and debug for Java-based Play framework users.  
 
 Steps to understanding the system
 ---------------------------------
 
-**Play with the application**
+**Play with the application.**
 
 Begin by downloading the code, invoking "play run" in your shell, then retrieving http://localhost:9000 
 to retrieve the single form as illustrated at the top of this page. The form displays the fields
@@ -45,7 +46,7 @@ are required, some are optional.
 When you submit a valid version of the form, the system will redisplay the form with exactly the 
 same data that you entered. 
 
-** Look at the controller **
+** Review the controller. **
 
 Now review the controller class [Application](https://github.com/ics-software-engineering/play-example-form/blob/master/app/controllers/Application.java)
 has just two methods: getIndex() which displays the form in the index page and postIndex() that processes a form submission
@@ -53,8 +54,8 @@ from the index page.
 
 The getIndex method takes a Student ID as a parameter. If the value is 0, then an empty form is
 displayed, otherwise the form is displayed pre-filled with the data associated with the Student ID.
-For example, you can retrieve the data for the student with ID 1 using: http://localhost:9000?id=1.
-The system instantiates a couple of students on startup. 
+For example, you can retrieve the data for the student with ID 1 using: http://localhost:9000/?id=1.
+The system [instantiates a couple of students on startup](https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L168-180). 
 
 By looking at the controller, you can see that 
         

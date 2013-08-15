@@ -148,8 +148,8 @@ public class Student {
   }
 
   /**
-   * Return a StudentFormData instance constructed from a student ID.
-   * @param id The ID of a student.
+   * Return a StudentFormData instance constructed from a student instance.
+   * @param id The ID of a student instance.
    * @return The StudentFormData instance, or throws a RuntimeException. 
    */
   public static StudentFormData makeStudentFormData(long id) {
@@ -159,6 +159,29 @@ public class Student {
       }
     }
     throw new RuntimeException("Couldn't find student");
+  }
+  
+
+  /**
+   * Returns a Student instance created from the form data.
+   * Assumes that the formData has been validated.
+   * The ID field is not assigned or managed in this application.
+   * @param formData The student form data.
+   * @return A student instance. 
+   */
+  public static Student makeInstance(StudentFormData formData) {
+    Student student = new Student();
+    student.name = formData.name;
+    student.password = formData.password;
+    for (String hobby : formData.hobbies) {
+      student.hobbies.add(Hobby.findHobby(hobby));
+    }
+    student.level = GradeLevel.findLevel(formData.level);
+    student.gpa = GradePointAverage.findGPA(formData.gpa);
+    for (String major : formData.majors) {
+      student.majors.add(Major.findMajor(major));
+    }
+    return student;
   }
   
   

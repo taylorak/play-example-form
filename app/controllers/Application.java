@@ -4,6 +4,7 @@ import models.GradeLevel;
 import models.GradePointAverage;
 import models.Hobby;
 import models.Major;
+import models.Student;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -25,7 +26,7 @@ public class Application extends Controller {
    */
   public static Result getIndex(long id) {
     StudentFormData studentData = (id == 0) ? new StudentFormData() : models.Student.makeStudentFormData(id);
-    Form<StudentFormData> formData = Form.form(StudentFormData.class);
+    Form<StudentFormData> formData = Form.form(StudentFormData.class).fill(studentData);
     return ok(index.render(
       formData,
       Hobby.makeHobbyMap(studentData),
@@ -46,12 +47,12 @@ public class Application extends Controller {
   public static Result postIndex() {
 
     // Get the submitted form data from the request object, and run validation.
-    Form<StudentFormData> bound = Form.form(StudentFormData.class).bindFromRequest();
+    Form<StudentFormData> formData = Form.form(StudentFormData.class).bindFromRequest();
 
-    if (bound.hasErrors()) {
-      // Don't call bound.get() if there are any errors. 
+    if (formData.hasErrors()) {
+      // Never call bound.get() if there are errors. 
       flash("error", "Please correct errors above.");
-      return badRequest(index.render(bound,
+      return badRequest(index.render(formData,
         Hobby.makeHobbyMap(null), 
         GradeLevel.getNameList(),
         GradePointAverage.makeGPAMap(null), 
@@ -59,14 +60,14 @@ public class Application extends Controller {
       ));
     }
     else {
-      // We could convert formData into a Student instance here and save it if we wanted.
-      // In this case, we'll just re-render it.
-      flash("success", "Student data submitted successfully");
-      return ok(index.render(bound,
-        Hobby.makeHobbyMap(bound.get()),
+      // Convert the formData into a Student model instance.
+      Student student = Student.makeInstance(formData.get());
+      flash("success", "Student instance created/edited: " + student);
+      return ok(index.render(formData,
+        Hobby.makeHobbyMap(formData.get()),
         GradeLevel.getNameList(),
-        GradePointAverage.makeGPAMap(bound.get()),
-        Major.makeMajorMap(bound.get())
+        GradePointAverage.makeGPAMap(formData.get()),
+        Major.makeMajorMap(formData.get())
       ));
     }
   }
