@@ -14,7 +14,7 @@ This application provides an example of form processing with the following featu
   * Separation of [form backing classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) from [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
   * All validation done through a [validate() method](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java#L57-123).
     
-The design of this example differs in two significant ways from the "standard" Play examples. 
+The design of this example differs in two significant ways from the traditional Play form processing examples. 
 
   1. **Distinct model and form classes.**  Most examples of form processing in Play "overload" the 
      model classes to serve two tasks:  (1) specify the database schema structure; and 
@@ -104,23 +104,26 @@ as well as a validate() method that determines if the submitted form data is val
 Issues
 ------
 
-While this code works and is relatively easy to understand, there are at least two issues with it
+While this code works and is pretty easy to understand, there are at least two design problems with it
 that I can see:
 
   * Verbosity.  It's kind of a drag to have two representations for a Student, one as a model and
     one as a backing class for forms.   I know that I presented this as a feature, but at the end
     of the day it's born of necessity.  Maybe Play will evolve one day to support composite entities
     (i.e. a Student that contains a List of Hobbies) in which display, binding, and validation
-    can be done easily and understandably, but that day is not here yet. (I challenged the Play
-    community to do it, and Jason's version was the only working answer.)
+    can be done easily and understandably with a single class, but that day does not appear to 
+    be here yet.
     
   * Integrity.  The current code encapsulates validation in the StudentFormData class, and certain
     methods (such as Student.makeInstance) must assume that they are being passed a valid
-    StudentFormData instance.  These kind of assumptions are worrisome, and annotation-based 
-    constraints could remove that problem.  Annotation-based constraints also offer the potential
-    to simultaneously apply to both the database model and the form validation, which is really
-    nice.  It's too bad that annotation-based validation just doesn't work for this simple
-    example application. Maybe some future version of Play will get it working. 
+    StudentFormData instance.  That kind of assumption is worrisome, and annotation-based 
+    constraints could avoid it.  Annotation-based constraints also offer the potential
+    to simultaneously apply to both the database model and the form validation, which would be really
+    nice.  It's too bad that no one has yet gotten annotation-based validation to work for
+    this kind of simple situation. Maybe that will change in future.
+    
+Note: I played around for a while with [Custom Data Binding](http://www.playframework.com/documentation/2.0/JavaForms).
+I could not get it to work. 
     
 Acknowledgements
 ----------------
