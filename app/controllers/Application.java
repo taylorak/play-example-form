@@ -50,7 +50,7 @@ public class Application extends Controller {
     Form<StudentFormData> formData = Form.form(StudentFormData.class).bindFromRequest();
 
     if (formData.hasErrors()) {
-      // Never call bound.get() if there are errors. 
+      // Don't call formData.get() when there are errors, pass 'null' to helpers instead. 
       flash("error", "Please correct errors above.");
       return badRequest(index.render(formData,
         Hobby.makeHobbyMap(null), 
