@@ -16,14 +16,22 @@ This application provides an example of form processing with the following featu
   * Separation of the form's [backing class](https://github.com/ics-software-engineering/play-example-form/blob/master/app/assemblies/StudentFormData.java) from the [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
   * All validation done through a [validate() method](https://github.com/ics-software-engineering/play-example-form/blob/master/app/assemblies/Student.java#L46-97).
     
-There are two features of the Play framework that are conspicuously absent from this implementation:
-  1. Annotation-based form validation.
-  2. Custom data binding.
+The design of this example differs in two significant ways from the "standard" Play examples. 
 
-These seem like cool features, and they probably work great for situations in which you do not need
-to display and validate lists of objects in your form fields. I could not figure out to get them to 
-work for lists of checkboxes and multiple-selection lists.  The advantage of this code is that it is
-simple to understand and simple to debug.  
+  1. **Distinct model and form classes.**  Most examples of form processing in Play "overload" the 
+     model classes to serve two duties:  (1) specification of the database schema structure; and 
+     (2) provide the "backing class" for forms.  Requiring a single class to perform these two duties 
+     works well only when both the models and the forms are simple. In this example system, the
+     views.formdata package provides classes for form processing, and the models package provides
+     classes for database schemas.
+
+  2. **Explicit field constructors for Twitter Bootstrap 2.x.**  The canonical recommendation for users of 
+     Twitter Bootstrap 2.x is to create an implicit field constructor.  The problem with this recommendation
+     is that a single implicit field constructor cannot satisfy all of Twitter Bootstrap's layout  
+     requirements for form controls (for example, multiple checkboxes). This example illustrates
+     a more general solution in which normal ("explicit") scala templates are defined in the 
+     [views.bootstrap package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap) for each of the Twitter Bootstrap controls. As a side benefit, the 
+     code is significantly easier to understand and debug for Java-based Play framework users.  
 
 Steps to understanding the system
 ---------------------------------
@@ -44,7 +52,12 @@ Now review the controller class [Application](https://github.com/ics-software-en
 has just two methods: getIndex() which displays the form in the index page and postIndex() that processes a form submission
 from the index page. 
 
-The getIndex method takes a Student ID as a parameter. If the value is 0, then the 
+The getIndex method takes a Student ID as a parameter. If the value is 0, then an empty form is
+displayed, otherwise the form is displayed pre-filled with the data associated with the Student ID.
+For example, you can retrieve the data for the student with ID 1 using: http://localhost:9000?id=1.
+The system instantiates a couple of students on startup. 
+
+By looking at the controller, you can see that 
         
 Playing with the application
 ----------------------------

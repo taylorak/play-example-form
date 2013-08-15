@@ -24,14 +24,14 @@ public class Application extends Controller {
    * @return The page containing the form and data.
    */
   public static Result getIndex(long id) {
-    StudentFormData student = (id == 0) ? new StudentFormData() : models.Student.makeStudentFormData(id);
-    Form<StudentFormData> form = Form.form(StudentFormData.class);
+    StudentFormData studentData = (id == 0) ? new StudentFormData() : models.Student.makeStudentFormData(id);
+    Form<StudentFormData> formData = Form.form(StudentFormData.class);
     return ok(index.render(
-      form,
-      Hobby.makeHobbyMap(student),
+      formData,
+      Hobby.makeHobbyMap(studentData),
       GradeLevel.getNameList(),
-      GradePointAverage.makeGPAMap(student),
-      Major.makeMajorMap(student)
+      GradePointAverage.makeGPAMap(studentData),
+      Major.makeMajorMap(studentData)
     ));
   }
 
@@ -45,9 +45,8 @@ public class Application extends Controller {
    */
   public static Result postIndex() {
 
-    Form<StudentFormData> form = Form.form(StudentFormData.class);
-    // Retrieve the submitted form data from the request object.
-    Form<StudentFormData> bound = form.bindFromRequest();
+    // Get the submitted form data from the request object, and run validation.
+    Form<StudentFormData> bound = Form.form(StudentFormData.class).bindFromRequest();
 
     if (bound.hasErrors()) {
       // Don't call bound.get() if there are any errors. 
@@ -59,6 +58,8 @@ public class Application extends Controller {
       ));
     }
     else {
+      // We could convert formData into a Student instance here and save it if we wanted.
+      // In this case, we'll just re-render it.
       return ok(index.render(bound,
         Hobby.makeHobbyMap(bound.get()),
         GradeLevel.getNameList(),
