@@ -5,7 +5,7 @@
   <div class="controls">
     <select
       id="@field.id"
-      name="@field.name"
+      name="@if(isMultiple) {@(field.name + "[]")} else {@field.name}"
       @if(isMultiple) {multiple="multiple"}>
       @if(!isMultiple) {<option class="blank" value="">Please select a value</option>}
       @for((optionName, isSelected) <- optionMap) {

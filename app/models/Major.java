@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import assemblies.StudentFormData;
 
 /**
  * Represent a student's majors.
+ * This class includes:
+ * <ul>
+ * <li> The model structure (fields, plus getters and setters).
+ * <li> Some methods to facilitate form display and manipulation (makeMajorMap, etc.).
+ * <li> Some fields and methods to "fake" a database of Majors.
+ * </ul>
  */
 public class Major {
   private long id;
@@ -40,7 +47,7 @@ public class Major {
    * with all unchecked boxes.
    * @return A map of Major names to booleans indicating the majors associated with the student.
    */
-  public static Map<String, Boolean> makeMajorMap(assemblies.Student student) {
+  public static Map<String, Boolean> makeMajorMap(StudentFormData student) {
     Map<String, Boolean> majorMap = new HashMap<String, Boolean>();
     for (Major major : allMajors) {
       majorMap.put(major.getName(),  (student == null) ? false : student.majors.contains(major.getName()));
@@ -67,9 +74,10 @@ public class Major {
     return String.format("[Major %s]", this.name);
   }
 
-  // Fake a database of majors.
+  /** Fake a database of majors. */
   private static List<Major> allMajors = new ArrayList<>();
 
+  /** Instantiate the fake database of Majors. */
   static {
     allMajors.add(new Major(1L, "Chemistry"));
     allMajors.add(new Major(2L, "Biology"));

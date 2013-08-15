@@ -1,6 +1,6 @@
 package controllers;
 
-import assemblies.Student;
+import assemblies.StudentFormData;
 import models.GradeLevel;
 import models.GradePointAverage;
 import models.Hobby;
@@ -11,15 +11,21 @@ import play.mvc.Result;
 import views.html.index;
 
 /**
- * The controller for the home page of this application.
+ * The controller for the single page of this application.
  *
  * @author Philip Johnson
  */
 public class Application extends Controller {
 
+  /**
+   * Returns the page where the form is filled by the Student whose id is passed, or an empty form
+   * if the id is 0.
+   * @param id The id of the Student whose data is to be shown.  0 if an empty form is to be shown.
+   * @return The page containing the form and data.
+   */
   public static Result getIndex(long id) {
-    Student student = (id == 0) ? new Student() : models.Student.findStudent(id);
-    Form<Student> form = Form.form(Student.class);
+    StudentFormData student = (id == 0) ? new StudentFormData() : models.Student.makeStudentFormData(id);
+    Form<StudentFormData> form = Form.form(StudentFormData.class);
     return ok(index.render(
       form,
       Hobby.makeHobbyMap(student),
@@ -29,18 +35,27 @@ public class Application extends Controller {
     ));
   }
 
+  /**
+   * Process a form submission.
+   * First we bind the HTTP POST data to an instance of StudentFormData.
+   * The binding process will invoke the StudentFormData.validate() method.
+   * If errors are found, re-render the page, displaying the error data. 
+   * If errors not found, render the page with the good data. 
+   * @return The index page with the results of validation. 
+   */
   public static Result postIndex() {
 
-    Form<Student> form = Form.form(Student.class);
+    Form<StudentFormData> form = Form.form(StudentFormData.class);
     // Retrieve the submitted form data from the request object.
-    Form<Student> bound = form.bindFromRequest();
+    Form<StudentFormData> bound = form.bindFromRequest();
 
     if (bound.hasErrors()) {
+      // Don't call bound.get() if there are any errors. 
       return badRequest(index.render(bound,
-        Hobby.makeHobbyMap(null),
+        Hobby.makeHobbyMap(null), 
         GradeLevel.getNameList(),
-        GradePointAverage.makeGPAMap(null),
-        Major.makeMajorMap(null)
+        GradePointAverage.makeGPAMap(null), 
+        Major.makeMajorMap(null) 
       ));
     }
     else {

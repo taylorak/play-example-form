@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import assemblies.StudentFormData;
 
 /**
  * Represent a student's hobbies.
+ * This class includes:
+ * <ul>
+ * <li> The model structure (fields, plus getters and setters).
+ * <li> Some methods to facilitate form display and manipulation (makeHobbyMap, etc.).
+ * <li> Some fields and methods to "fake" a database of Hobbies.
+ * </ul>
  */
 public class Hobby {
   private long id;
@@ -40,7 +47,7 @@ public class Hobby {
    * with all unchecked boxes.
    * @return A map of hobby names to booleans indicating the hobbies associated with the student.
    */
-  public static Map<String, Boolean> makeHobbyMap(assemblies.Student student) {
+  public static Map<String, Boolean> makeHobbyMap(StudentFormData student) {
     Map<String, Boolean> hobbyMap = new HashMap<String, Boolean>();
     for (Hobby hobby : allHobbies) {
       hobbyMap.put(hobby.getName(), (student != null && student.hobbies.contains(hobby.getName())));
@@ -67,9 +74,10 @@ public class Hobby {
     return String.format("[Hobby %s]", this.name);
   }
 
-  // Fake a database of hobbies.
+  /** Fake a database of hobbies. */
   private static List<Hobby> allHobbies = new ArrayList<>();
 
+  /** Instantiate the fake database of hobbies. */
   static {
     allHobbies.add(new Hobby(1L, "Surfing"));
     allHobbies.add(new Hobby(2L, "Biking"));

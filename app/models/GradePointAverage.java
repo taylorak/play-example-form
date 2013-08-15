@@ -5,9 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import assemblies.StudentFormData;
 
 /**
- * Represent a student grade level.
+ * Represent a Grade Point Average. 
+ * This class includes:
+ * <ul>
+ * <li> The model structure (fields, plus getters and setters).
+ * <li> Some methods to facilitate form display and manipulation (makeGPAMap, etc.).
+ * <li> Some fields and methods to "fake" a database of GPAs.
+ * </ul>
  */
 public class GradePointAverage {
   private long id;
@@ -39,7 +46,7 @@ public class GradePointAverage {
    * @param student A student with a GPA.
    * @return A map of GPA to boolean indicating which one is the student's GPA.
    */
-  public static Map<String, Boolean> makeGPAMap(assemblies.Student student) {
+  public static Map<String, Boolean> makeGPAMap(StudentFormData student) {
     Map<String, Boolean> gpaMap = new TreeMap<String, Boolean>();
     for (GradePointAverage gpa : allGPAs) {
       gpaMap.put(gpa.getName(),  (student == null) ? false : (student.gpa != null && student.gpa.equals(gpa.getName())));
@@ -69,6 +76,10 @@ public class GradePointAverage {
     return null;
   }
 
+  /**
+   * Define a default GPA, used for form display.
+   * @return The default GPA.
+   */
   public static GradePointAverage getDefaultGPA() {
     return findGPA("4.0");
   }
@@ -78,9 +89,10 @@ public class GradePointAverage {
     return String.format("[GPA %s]", this.name);
   }
 
-  // Fake a database of Grade Levels.
+  /** Fake a database of GPAs. */
   private static List<GradePointAverage> allGPAs = new ArrayList<>();
 
+  /** Instantiate the fake database of GPAs. */
   static {
     allGPAs.add(new GradePointAverage(1L, "4.0"));
     allGPAs.add(new GradePointAverage(2L, "3.0 - 3.9"));

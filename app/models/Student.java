@@ -2,13 +2,19 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import assemblies.StudentFormData;
 
 /**
- * Simple model class used for form data manipulation.
+ * Simple model class to represent students.
+ * This class includes:
+ * <ul>
+ * <li> The model structure (fields, plus getters and setters).
+ * <li> Methods to facilitate form display (makeStudentFormData).
+ * <li> Some fields and methods to "fake" a database of Students, including valid and invalid.
+ * </ul> 
  */
 public class Student {
   private long id;
-
   private String name;
   private String password;
   private List<Hobby> hobbies = new ArrayList<>(); // Hobbies are optional.
@@ -16,15 +22,30 @@ public class Student {
   private GradePointAverage gpa;
   private List<Major> majors = new ArrayList<>(); // Majors are optional.
 
+  /** Model entities typically want to have a no-arg constructor. */
   public Student() {
   }
 
   public Student(long id, String name, String password, GradeLevel level, GradePointAverage gpa) {
-    this.id = id;
+    this.setId(id);
     this.name = name;
     this.password = password;
     this.level = level;
     this.gpa = gpa;
+  }
+  
+  /**
+   * @return the id
+   */
+  private long getId() {
+    return id;
+  }
+
+  /**
+   * @param id the id to set
+   */
+  private void setId(long id) {
+    this.id = id;
   }
 
   public boolean hasHobby(String hobbyName) {
@@ -126,26 +147,25 @@ public class Student {
     this.majors.add(major);
   }
 
-  // Fake a database of students.
+  /**
+   * Return a StudentFormData instance constructed from a student ID.
+   * @param id The ID of a student.
+   * @return The StudentFormData instance, or throws a RuntimeException. 
+   */
+  public static StudentFormData makeStudentFormData(long id) {
+    for (Student student : allStudents) {
+      if (student.getId() == id) {
+        return new StudentFormData(student.name, student.password, student.level, student.gpa, student.hobbies, student.majors);
+      }
+    }
+    throw new RuntimeException("Couldn't find student");
+  }
+  
+  
+  /** Fake a database of students. */
   private static List<Student> allStudents = new ArrayList<>();
 
-  public static assemblies.Student findStudent(long id) {
-    for (Student student : allStudents) {
-      if (student.id == id) {
-        return new assemblies.Student(student.name, student.password, student.level, student.gpa, student.hobbies, student.majors);
-      }
-    }
-    throw new RuntimeException("Couldn't find student");
-  }
-  public static Student getById(long id) {
-    for (Student student : allStudents) {
-      if (student.id == id) {
-        return student;
-      }
-    }
-    throw new RuntimeException("Couldn't find student");
-  }
-
+  /** Populate the fake database with both valid and invalid students, just for tutorial purposes.*/
   static {
     // Valid student. No optional data supplied.
     allStudents.add(new Student(1L, "Joe Good", "mypassword", GradeLevel.findLevel("Freshman"), GradePointAverage.findGPA("4.0")));
@@ -157,6 +177,20 @@ public class Student {
     getById(2L).addMajor(Major.findMajor("Physics"));
     // Invalid student. Password is too short.
     allStudents.add(new Student(3L, "Frank Bad", "pass", GradeLevel.findLevel("Freshman"), GradePointAverage.findGPA("4.0")));
+  }
+  
+  /**
+   * Find a student instance given the ID.
+   * @param id The id of the student.
+   * @return The Student instance, or throws a RuntimeException.
+   */
+  public static Student getById(long id) {
+    for (Student student : allStudents) {
+      if (student.getId() == id) {
+        return student;
+      }
+    }
+    throw new RuntimeException("Couldn't find student");
   }
 
 }

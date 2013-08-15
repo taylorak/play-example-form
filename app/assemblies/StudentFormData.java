@@ -10,22 +10,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simple model class used for form data manipulation.
+ * Backing class for the Student data form.
+ * Requirements:
+ * <ul>
+ * <li> All fields are public, 
+ * <li> All fields are of type String or List[String].
+ * <li> A public no-arg constructor.
+ * <li> A validate() method that returns null or a List[ValidationError].
+ * </ul>
  */
-public class Student {
+public class StudentFormData {
 
   public String name = "";
   public String password = "";
-  public List<String> hobbies = new ArrayList<>(); // Hobbies are optional.
+  public List<String> hobbies = new ArrayList<>(); 
   public String level = "";
   public String gpa = "";
-  public List<String> majors = new ArrayList<>(); // Majors are optional.
+  public List<String> majors = new ArrayList<>(); 
 
-  public Student() {
-
+  /** Required for form instantiation. */
+  public StudentFormData() {
   }
 
-  public Student(String name, String password, GradeLevel level, GradePointAverage gpa, List<Hobby> hobbies, List<Major> majors) {
+  /**
+   * Creates an initialized form instance. Assumes the passed data is valid. 
+   * @param name The name.
+   * @param password The password.
+   * @param level The level.
+   * @param gpa The GPA.
+   * @param hobbies The hobbies.
+   * @param majors The majors. 
+   */
+  public StudentFormData(String name, String password, GradeLevel level, GradePointAverage gpa, List<Hobby> hobbies, List<Major> majors) {
     this.name = name;
     this.password = password;
     this.level = level.getName();
@@ -39,9 +55,20 @@ public class Student {
   }
 
   /**
-   * Validates Form<Student>
+   * Validates Form<StudentFormData>.
+   * Called automatically in the controller by bindFromRequest().
+   * 
+   * Validation checks include:
+   * <ul>
+   * <li> Name must be non-empty.
+   * <li> Password must be at least five characters.
+   * <li> Hobbies (plural) are optional, but if specified, must exist in database.
+   * <li> Grade Level is required and must exist in database.
+   * <li> GPA is required and must exist in database.
+   * <li> Majors (plural) are optional, but if specified, must exist in database.
+   * </ul>
    *
-   * @return list of errors
+   * @return Null if valid, or a List[ValidationError] if problems found.
    */
   public List<ValidationError> validate() {
 
@@ -57,7 +84,7 @@ public class Student {
       errors.add(new ValidationError("password", "Given password is less than five characters."));
     }
 
-    // Hobbies are Optional, but if supplied must exist in database.
+    // Hobbies are optional, but if supplied must exist in database.
     if (hobbies.size() > 0) {
       for (String hobby : hobbies) {
         if (Hobby.findHobby(hobby) == null) {
