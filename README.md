@@ -163,6 +163,14 @@ that I can see:
     but could not get it to work correctly for lists of Hobbies.
     
 If you see ways to solve these problems, please feel free to fork this code and implement your changes. 
+
+Screencast
+----------
+
+Click the image below to watch a 13 minute walkthrough of this example:
+
+[<img src="https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-screencast.png" width="400">](https://www.youtube.com/watch?v=247H9NVpMME)
+
     
 Acknowledgements
 ----------------
