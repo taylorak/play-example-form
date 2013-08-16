@@ -1,10 +1,7 @@
-play-example-form
-=================
+Overview
+========
 
 ![screenshot](https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-homepage.png)
-
-Overview
---------
 
 This application provides an example of form processing with the following features:
 
