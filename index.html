@@ -113,7 +113,7 @@ from the index page. See the <a href="https://github.com/ics-software-engineerin
 <p>The getIndex method takes a Student ID as a parameter. If the value is 0, then an empty form is
 displayed, otherwise the form is displayed pre-filled with the data associated with the Student ID.
 For example, you can retrieve the data for the student with ID 1 using: http://localhost:9000/?id=1.
-The system <a href="https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L168-180">instantiates a couple of students on startup</a>. </p>
+The system <a href="https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L191-203">instantiates a couple of students on startup</a>. </p>
 
 <p>By looking at the controller, you can see the basic approach for either form display (HTTP GET) or 
 form submission (HTTP POST):</p>
@@ -194,6 +194,13 @@ to simultaneously apply to both the database model and the form validation, whic
 nice.  As a first step, I played around for a while with <a href="http://www.playframework.com/documentation/2.0/JavaForms">Custom Data Binding</a>,
 but could not get it to work correctly for lists of Hobbies.</p></li>
 </ul><p>If you see ways to solve these problems, please feel free to fork this code and implement your changes. </p>
+
+<h2>
+<a name="screencast" class="anchor" href="#screencast"><span class="octicon octicon-link"></span></a>Screencast</h2>
+
+<p>Click the image below to watch a 28 minute walkthrough of this example:</p>
+
+<p><a href="http://www.youtube.com/watch?v=247H9NVpMME"><img src="https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-screencast.png" width="400"></a></p>
 
 <h2>
 <a name="acknowledgements" class="anchor" href="#acknowledgements"><span class="octicon octicon-link"></span></a>Acknowledgements</h2>
