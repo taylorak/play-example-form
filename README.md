@@ -37,16 +37,17 @@ The design of this example differs in two significant ways from the traditional 
 Steps to understanding the system
 ---------------------------------
 
-**Play with the running application.**
+**Run the application.**
 
 Begin by downloading the code, invoking "play run" in your shell, then retrieving http://localhost:9000 
-to retrieve the single form as illustrated at the top of this page. The form displays the fields
+to display the single form illustrated at the top of this page. The form displays the fields
 associated with a "Student":  Name, Password, Hobbies, Level, GPA, and Majors.  Some of these
-are required, some are optional. Try filling out the form in both valid and invalid ways.
-
+are required, some are optional. Try filling out the form in both valid and invalid ways and
+pressing Submit to see what happens.
 
 When you submit a valid version of the form, the system will redisplay the form with exactly the 
-same data that you entered. 
+same data that you entered, and also show a representation of the Student model instance
+created from the form values.
 
 **Run the tests.**
 
@@ -71,7 +72,7 @@ to invoke the test cases. You should get output similar to the following:
 
 We'll come back to this later, but this step verifies that tests run correctly in your environment.
 
-**Review the controller.**
+**Review the controllers.**
 
 Now review the controller class. [Application](https://github.com/ics-software-engineering/play-example-form/blob/master/app/controllers/Application.java)
 has just two methods: getIndex() which displays the form in the index page and postIndex() that processes a form submission
@@ -111,11 +112,7 @@ is where things get most interesting.   The [main](https://github.com/ics-softwa
 and [index](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/index.scala.html)
 templates are pretty much what you'd expect. 
 
-Note that the main template imports JQuery which is needed for Bootstrap Javascript components and not normally shown
-in the built-in Play examples. What is really not shown in the built-in Play examples is the 
-fact that in order to test your code with HTMLUnit, you cannot use a version of JQuery more recent than 1.8.3.
-Look at [Build.scala](https://github.com/ics-software-engineering/play-example-form/blob/master/project/Build.scala#L17-19)
-to see how to load a newer version of Bootstrap with an older, HTMLUnit-compliant version of JQuery.
+Note that the main template shows how to import JQuery in case you want to use Bootstrap Javascript components.
 
 The second thing to review is the [views.bootstrap](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap)
 subpackage, containing Bootstrap 2.x Scala templates for various form controls. Kudos to [Jason
@@ -125,6 +122,28 @@ Finally, the [views.formdata](https://github.com/ics-software-engineering/play-e
 subpackage contains the single backing class ([StudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java)) required for this application.
 Note that the backing class consists of public fields containing the String data to be displayed/bound in the form,
 as well as a validate() method that determines if the submitted form data is valid or not.
+
+**Review the tests.**
+
+Testing is pretty straightforward, uses [Fluentlenium](https://github.com/FluentLenium/FluentLenium#what-is-fluentlenium-), and implements the 
+[page object pattern](https://github.com/FluentLenium/FluentLenium/wiki/Page-Object-Pattern).
+
+Start by looking at [IndexPage](https://github.com/ics-software-engineering/play-example-form/blob/master/test/tests/pages/IndexPage.java).
+This class implements a bunch of methods to fill out the form and check to see whether the 
+displayed form contains a success or error message. Note that most of these methods depend upon
+finding an HTML element with a specific ID, and so the Bootstrap Scala templates need to make
+sure these ID fields are set correctly.
+
+The actual test code is in [ViewTest](https://github.com/ics-software-engineering/play-example-form/blob/master/test/tests/ViewTest.java).
+There are four tests: one that just checks that we can retrieve the page, one that tests that
+submitting an empty form generates a validation error, one that submits a form filled out 
+from a valid Student ID, and a final one that fills out a valid form manually by using the 
+IndexPage methods. 
+
+Getting tests to work exposes an unfortunate library versioning issue: HTMLUnit requires 
+a version of JQuery no later than 1.8.3, while recent versions of Twitter Bootstrap 
+have a Maven dependency of JQuery 1.9.0.  [Build.scala](https://github.com/ics-software-engineering/play-example-form/blob/master/project/Build.scala#L17-19)
+illustrates how to load a newer version of Bootstrap with an older, HTMLUnit-compliant version of JQuery.
         
 Issues
 ------
@@ -132,13 +151,13 @@ Issues
 While this code works and is pretty easy to understand, there are at least two design problems with it
 that I can see:
 
-  * Verbosity.  It's kind of a drag to have two representations for a Student, one as a model and
+  * **Verbosity.**  It's kind of a drag to have two representations for a Student, one as a model and
     one as a backing class for forms.   I know that I presented this as a feature, but at the end
     of the day it's born of necessity.  Perhaps there exists an elegant way to implement composite entities
     (i.e. a Student that contains a List of Hobbies) in which display, binding, and validation
     can be done easily and understandably with a single class.
     
-  * Integrity.  The current code encapsulates validation in the StudentFormData class, and certain
+  * **Integrity.**  The code provides validation in the StudentFormData class, and certain
     methods (such as Student.makeInstance) must assume that they are being passed a valid
     StudentFormData instance.  That kind of assumption is worrisome, and annotation-based 
     constraints could avoid it.  Annotation-based constraints also offer the potential
