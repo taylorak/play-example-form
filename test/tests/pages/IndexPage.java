@@ -1,17 +1,25 @@
 package tests.pages;
 
 import static org.fluentlenium.core.filter.FilterConstructor.withId;
-import static org.fluentlenium.core.filter.FilterConstructor.withText;
 import org.fluentlenium.core.FluentPage;
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Implements the page object pattern for the index page of this application. 
+ * See: https://github.com/FluentLenium/FluentLenium#what-is-fluentlenium-
+ * And: http://ics-software-engineering.github.io/play-example-fluentlenium/
+ */
 public class IndexPage extends FluentPage {
   private String url;
-  private WebDriver webDriver;
 
+  /**
+   * Construct the page. Note that you must always pass a studentID.  
+   * @param webDriver The driver.
+   * @param port The port.
+   * @param studentID The ID. Use 0 to get a blank form.
+   */
   public IndexPage(WebDriver webDriver, int port, int studentID) {
     super(webDriver);
-    this.webDriver = webDriver;
     this.url = "http://localhost:" + port + "/?id=" + studentID;
   }
   
@@ -36,19 +44,19 @@ public class IndexPage extends FluentPage {
   }
   
   public void selectHobby(String hobby) {
-    find("div", withId("hobbies")).find("input", withText(hobby)).click();
+    find("div", withId("hobbies")).find("input", withId(hobby)).click();
   }
 
   public void selectGradeLevel(String level) {
-    find("div", withId("levels"));
+    find("div", withId("levels")).find("input", withId(level)).click();
   }
   
   public void selectGPA(String gpa) {
-    find("select", withId("gpa")).find("option", withText(gpa)).click();
+    find("select", withId("gpa")).find("option", withId(gpa)).click();
   }
 
   public void selectMajor(String major) {
-    find("select", withId("majors")).find("option", withText(major)).click();
+    find("select", withId("majors")).find("option", withId(major)).click();
   }
   
   public void submit() {
@@ -60,17 +68,10 @@ public class IndexPage extends FluentPage {
   }
   
   public boolean hasSuccessMessage() {
-    return (this.webDriver.getPageSource().contains("success-message")) && 
-           (findFirst("div", withId("success-message")).isDisplayed());
+    return findFirst("div", withId("success-message")) != null;
   }
   
   public boolean hasErrorMessage() {
-    return (this.webDriver.getPageSource().contains("error-message")) &&
-           (findFirst("div", withId("error-message")).isDisplayed());
+    return findFirst("div", withId("error-message")) != null;
   }
-
-
-
-  
-  
 }

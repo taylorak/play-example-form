@@ -57,7 +57,7 @@ public class ViewTest {
     });
   }
   
-  /** Test submission of a filled out form. */
+  /** Test submission of a manually filled out form. */
   @Test
   public void testIndexPageFormFilledSubmission() {
     running(testServer(testPort, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
@@ -69,10 +69,13 @@ public class ViewTest {
         indexPage.setName("Ronald D. Moore");
         indexPage.setPassword("Battlestar Galactica");
         indexPage.selectHobby("Surfing");
+        indexPage.selectHobby("Biking");
         indexPage.selectGradeLevel("Freshman");
         indexPage.selectGPA("4.0");
+        indexPage.selectMajor("Physics");
+        indexPage.selectMajor("Mathematics");
         indexPage.submit();
-        //System.out.println(browser.pageSource());
+        //System.out.println(browser.pageSource());  // useful for debugging.
         assertThat(indexPage.hasSuccessMessage()).isTrue();
       }
     });
