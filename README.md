@@ -13,7 +13,7 @@ This application provides an example of form processing with the following featu
   * Individual twitter bootstrap-specific [helper templates](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap)
   * Separation of [form backing classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) from [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
   * All validation done through a [validate() method](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java#L57-123).
-  * Testing with Fluentlenium.
+  * Testing with [Fluentlenium](https://github.com/FluentLenium/FluentLenium).
     
 The design of this example differs in two significant ways from the traditional Play form processing examples. 
 
