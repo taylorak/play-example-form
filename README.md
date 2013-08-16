@@ -78,7 +78,7 @@ from the index page. See the [routes](https://github.com/ics-software-engineerin
 The getIndex method takes a Student ID as a parameter. If the value is 0, then an empty form is
 displayed, otherwise the form is displayed pre-filled with the data associated with the Student ID.
 For example, you can retrieve the data for the student with ID 1 using: http://localhost:9000/?id=1.
-The system [instantiates a couple of students on startup](https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L168-180). 
+The system [instantiates a couple of students on startup](https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L191-203). 
 
 By looking at the controller, you can see the basic approach for either form display (HTTP GET) or 
 form submission (HTTP POST):
