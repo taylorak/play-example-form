@@ -109,21 +109,19 @@ that I can see:
 
   * Verbosity.  It's kind of a drag to have two representations for a Student, one as a model and
     one as a backing class for forms.   I know that I presented this as a feature, but at the end
-    of the day it's born of necessity.  Maybe Play will evolve one day to support composite entities
+    of the day it's born of necessity.  Perhaps there exists an elegant way to implement composite entities
     (i.e. a Student that contains a List of Hobbies) in which display, binding, and validation
-    can be done easily and understandably with a single class, but that day does not appear to 
-    be here yet.
+    can be done easily and understandably with a single class.
     
   * Integrity.  The current code encapsulates validation in the StudentFormData class, and certain
     methods (such as Student.makeInstance) must assume that they are being passed a valid
     StudentFormData instance.  That kind of assumption is worrisome, and annotation-based 
     constraints could avoid it.  Annotation-based constraints also offer the potential
     to simultaneously apply to both the database model and the form validation, which would be really
-    nice.  It's too bad that no one has yet gotten annotation-based validation to work for
-    this kind of simple situation. Maybe that will change in future.
+    nice.  As a first step, I played around for a while with [Custom Data Binding](http://www.playframework.com/documentation/2.0/JavaForms),
+    but could not get it to work correctly for lists of Hobbies.
     
-Note: I played around for a while with [Custom Data Binding](http://www.playframework.com/documentation/2.0/JavaForms).
-I could not get it to work correctly (i.e. binding and validation) for lists of entities (such as Hobbies). 
+If you see ways to solve these problems, please feel free to fork this code and implement your changes. 
     
 Acknowledgements
 ----------------

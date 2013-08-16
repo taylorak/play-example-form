@@ -7,10 +7,12 @@ import org.openqa.selenium.WebDriver;
 
 public class IndexPage extends FluentPage {
   private String url;
+  private WebDriver webDriver;
 
-  public IndexPage(WebDriver webDriver, int port) {
+  public IndexPage(WebDriver webDriver, int port, int studentID) {
     super(webDriver);
-    this.url = "http://localhost:" + port;
+    this.webDriver = webDriver;
+    this.url = "http://localhost:" + port + "/?id=" + studentID;
   }
   
   @Override
@@ -38,7 +40,7 @@ public class IndexPage extends FluentPage {
   }
 
   public void selectGradeLevel(String level) {
-    find("div", withId("levels")).find("input", withText(level)).click();
+    find("div", withId("levels"));
   }
   
   public void selectGPA(String gpa) {
@@ -56,6 +58,17 @@ public class IndexPage extends FluentPage {
   public void cancel() {
     find("#cancel").click();
   }
+  
+  public boolean hasSuccessMessage() {
+    return (this.webDriver.getPageSource().contains("success-message")) && 
+           (findFirst("div", withId("success-message")).isDisplayed());
+  }
+  
+  public boolean hasErrorMessage() {
+    return (this.webDriver.getPageSource().contains("error-message")) &&
+           (findFirst("div", withId("error-message")).isDisplayed());
+  }
+
 
 
   

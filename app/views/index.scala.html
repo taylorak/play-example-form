@@ -16,12 +16,12 @@
   </div>
 
   @if(flash.containsKey("success")) {
-    <div class="alert alert-success">
+    <div id="success-message" class="alert alert-success">
       @flash.get("success")
     </div>
   }
   @if(flash.containsKey("error")) {
-    <div class="alert alert-error">
+    <div id="error-message" class="alert alert-error">
       @flash.get("error")
     </div>
   }
