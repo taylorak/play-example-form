@@ -20,7 +20,7 @@ The design of this example differs in two significant ways from the traditional 
   1. **Distinct model and form classes.**  Most examples of form processing in Play "overload" the 
      model classes to serve two tasks:  (1) specify the database schema structure; and 
      (2) provide the "backing class" for forms.  Requiring a single class to perform these two tasks
-     works well only when the models and forms are both simple and similar in structure. In this example system, the
+     appears to work well only when the models and forms are both simple and similar in structure. In this example system, the
      [views.formdata package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) provides 
      classes for form processing, and the [models package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models) provides
      classes for database schemas. Since Play requires the backing classes for forms to have public fields,
@@ -37,15 +37,39 @@ The design of this example differs in two significant ways from the traditional 
 Steps to understanding the system
 ---------------------------------
 
-**Play with the application.**
+**Play with the running application.**
 
 Begin by downloading the code, invoking "play run" in your shell, then retrieving http://localhost:9000 
 to retrieve the single form as illustrated at the top of this page. The form displays the fields
 associated with a "Student":  Name, Password, Hobbies, Level, GPA, and Majors.  Some of these
-are required, some are optional. 
+are required, some are optional. Try filling out the form in both valid and invalid ways.
+
 
 When you submit a valid version of the form, the system will redisplay the form with exactly the 
 same data that you entered. 
+
+**Run the tests.**
+
+Next, type "control-D" in your shell to bring down the development server, and then "play test" 
+to invoke the test cases. You should get output similar to the following:
+
+    [~/play-example-form]-> play test
+    [info] Loading project definition from /Users/johnson/projecthosting/github/play-example-form/project
+    [info] Set current project to play-example-form (in build file:/Users/johnson/projecthosting/github/play-example-form/)
+    [info] tests.ViewTest
+    [info] + tests.ViewTest.testIndexPageRetrieval
+    [info] + tests.ViewTest.testIndexPageEmptySubmission
+    [info] + tests.ViewTest.testIndexPageValidSubmission
+    [info] + tests.ViewTest.testIndexPageFormFilledSubmission
+    [info] 
+    [info] 
+    [info] Total for test tests.ViewTest
+    [info] Finished in 0.015 seconds
+    [info] 4 tests, 0 failures, 0 errors
+    [info] Passed: : Total 4, Failed 0, Errors 0, Passed 4, Skipped 0
+    [success] Total time: 8 s, completed Aug 16, 2013 10:05:33 AM
+
+We'll come back to this later, but this step verifies that tests run correctly in your environment.
 
 **Review the controller.**
 
