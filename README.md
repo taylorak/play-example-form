@@ -137,10 +137,12 @@ submitting an empty form generates a validation error, one that submits a form f
 from a valid Student ID, and a final one that fills out a valid form manually by using the 
 IndexPage methods. 
 
-Getting tests to work exposes an unfortunate library versioning issue: HTMLUnit requires 
+Getting tests to work exposes an unfortunate library versioning issue: [HTMLUnit](http://htmlunit.sourceforge.net/) requires 
 a version of JQuery no later than 1.8.3, while recent versions of Twitter Bootstrap 
 have a Maven dependency of JQuery 1.9.0.  [Build.scala](https://github.com/ics-software-engineering/play-example-form/blob/master/project/Build.scala#L17-19)
 illustrates how to load a newer version of Bootstrap with an older, HTMLUnit-compliant version of JQuery.
+Another solution is to use [PhantomJS](http://phantomjs.org/) rather than HTMLUnit; then you can
+use current versions of JQuery. [This fork](https://github.com/buster84/play-example-form) shows how to use PhantomJS.
         
 Issues
 ------
