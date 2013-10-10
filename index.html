@@ -39,10 +39,11 @@
 <p>This application provides an example of form processing with the following features:</p>
 
 <ul>
+<li>Play Version 2.2</li>
 <li>
 <a href="http://www.webjars.org/">WebJars</a> to download dependencies.</li>
 <li>
-<a href="http://getbootstrap.com/2.3.2/">Twitter Bootstrap 2.3.2</a>.</li>
+<a href="http://getbootstrap.com/">Twitter Bootstrap 3.0.0</a>.</li>
 <li>Individual Twitter Bootstrap <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap">helper templates</a> for each form control.</li>
 <li>Separation of <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata">form backing classes</a> from <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/models">model classes</a>.</li>
 <li>Validation done with <a href="https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java#L57-123">validate()</a>, not annotations.</li>
@@ -58,12 +59,12 @@
  classes for form processing, and the <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/models">models package</a> provides
  classes for database schemas. Since Play requires the backing classes for forms to have public fields,
  this separation means that model classes can have private fields, avoiding <a href="http://www.manning-sandbox.com/thread.jspa?messageID=143570&amp;#143570">well documented problems</a>. </p></li>
-<li><p><strong>Explicit field constructors for Twitter Bootstrap 2.x.</strong>  The canonical recommendation for users of 
- Twitter Bootstrap 2.x is to create a single "implicit" field constructor.  The problem with this recommendation
+<li><p><strong>Explicit field constructors for Twitter Bootstrap 3.x.</strong>  The canonical recommendation by Play developers for users of 
+ Twitter Bootstrap is to create a single "implicit" field constructor.  The problem with this recommendation
  is that a single implicit field constructor cannot satisfy all of Twitter Bootstrap's layout
  requirements for form controls (for example, multiple checkboxes). This example illustrates
  a more general solution in which normal (i.e. "explicit") scala templates (i.e. field constructors) are defined in the 
- <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap">views.bootstrap package</a> for each of the Twitter Bootstrap controls. IMHO, the 
+ <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap3">views.bootstrap3 package</a> for each of the Twitter Bootstrap controls. IMHO, the 
  code is significantly easier to understand and debug for Java-based Play framework users.  </p></li>
 </ol><h2>
 <a name="steps-to-understanding-the-system" class="anchor" href="#steps-to-understanding-the-system"><span class="octicon octicon-link"></span></a>Steps to understanding the system</h2>
@@ -143,9 +144,9 @@ templates are pretty much what you'd expect. </p>
 
 <p>Note that the main template shows how to import JQuery in case you want to use Bootstrap Javascript components.</p>
 
-<p>The second thing to review is the <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap">views.bootstrap</a>
-subpackage, containing Bootstrap 2.x Scala templates for various form controls. Kudos to <a href="https://github.com/kaeawc">Jason
-Pearson</a> to writing these templates and making other helpful changes; your t-shirt awaits.</p>
+<p>The second thing to review is the <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap3">views.bootstrap3</a>
+subpackage, containing Bootstrap 3 Scala templates for various form controls. Kudos to <a href="https://github.com/kaeawc">Jason
+Pearson</a> to writing these templates and making other helpful changes.</p>
 
 <p>Finally, the <a href="https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata">views.formdata</a>
 subpackage contains the single backing class (<a href="https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java">StudentFormData</a>) required for this application.
@@ -200,7 +201,10 @@ but could not get it to work correctly for lists of Hobbies.</p></li>
 <h2>
 <a name="screencast" class="anchor" href="#screencast"><span class="octicon octicon-link"></span></a>Screencast</h2>
 
-<p>Click the image below to watch a 28 minute walkthrough of this example:</p>
+<p>Click the image below to watch a 28 minute walkthrough of this system. </p>
+
+<p><em>Note that the following screencast documents a previous version of this system which used Twitter Bootstrap 2.3.2 and Play 2.1.  While the templates in the bootstrap3 package
+have been rewritten, the rest of the system remains unchanged.</em></p>
 
 <p><a href="http://www.youtube.com/watch?v=247H9NVpMME"><img src="https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-screencast.png" width="400"></a></p>
 
