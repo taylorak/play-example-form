@@ -9,8 +9,8 @@ This application provides an example of form processing with the following featu
   * [WebJars](http://www.webjars.org/) to download dependencies.
   * [Twitter Bootstrap 2.3.2](http://getbootstrap.com/2.3.2/).
   * Individual Twitter Bootstrap [helper templates](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/views/bootstrap) for each form control.
-  * Separation of [form backing classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) from [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
-  * Validation done with [validate()](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java#L57-123), not annotations.
+  * Separation of [form backing classes](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/views/formdata) from [model classes](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/models).
+  * Validation done with [validate()](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/app/views/formdata/StudentFormData.java#L57-123), not annotations.
   * Testing with [Fluentlenium](https://github.com/FluentLenium/FluentLenium).
     
 The design of this example differs in two significant ways from the traditional Play form processing examples. 
@@ -19,8 +19,8 @@ The design of this example differs in two significant ways from the traditional 
      model classes to serve two tasks:  (1) specify the database schema structure; and 
      (2) provide the "backing class" for forms.  Requiring a single class to perform these two tasks
      appears to work well only when the models and forms are both simple and similar in structure. In this example system, the
-     [views.formdata package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) provides 
-     classes for form processing, and the [models package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models) provides
+     [views.formdata package](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/views/formdata) provides 
+     classes for form processing, and the [models package](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/models) provides
      classes for database schemas. Since Play requires the backing classes for forms to have public fields,
      this separation means that model classes can have private fields, avoiding [well documented problems](http://www.manning-sandbox.com/thread.jspa?messageID=143570&#143570). 
 
@@ -29,7 +29,7 @@ The design of this example differs in two significant ways from the traditional 
      is that a single implicit field constructor cannot satisfy all of Twitter Bootstrap's layout
      requirements for form controls (for example, multiple checkboxes). This example illustrates
      a more general solution in which normal (i.e. "explicit") scala templates (i.e. field constructors) are defined in the 
-     [views.bootstrap package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap) for each of the Twitter Bootstrap controls. IMHO, the 
+     [views.bootstrap package](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/views/bootstrap) for each of the Twitter Bootstrap controls. IMHO, the 
      code is significantly easier to understand and debug for Java-based Play framework users.  
 
 Steps to understanding the system
@@ -72,14 +72,14 @@ We'll come back to this later, but this step verifies that tests run correctly i
 
 **Review the controllers.**
 
-Now review the controller class. [Application](https://github.com/ics-software-engineering/play-example-form/blob/master/app/controllers/Application.java)
+Now review the controller class. [Application](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/app/controllers/Application.java)
 has just two methods: getIndex() which displays the form in the index page and postIndex() that processes a form submission
-from the index page. See the [routes](https://github.com/ics-software-engineering/play-example-form/blob/master/conf/routes) file for how this is wired up.
+from the index page. See the [routes](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/conf/routes) file for how this is wired up.
 
 The getIndex method takes a Student ID as a parameter. If the value is 0, then an empty form is
 displayed, otherwise the form is displayed pre-filled with the data associated with the Student ID.
 For example, you can retrieve the data for the student with ID 1 using: http://localhost:9000/?id=1.
-The system [instantiates a couple of students on startup](https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L191-203). 
+The system [instantiates a couple of students on startup](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/app/models/Student.java#L191-203). 
 
 By looking at the controller, you can see the basic approach for either form display (HTTP GET) or 
 form submission (HTTP POST):
@@ -91,12 +91,12 @@ form submission (HTTP POST):
     to support display of their values as strings along with the student's current value(s) for
     those components.
     
-  * The [Student.makeInstance](https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L165-185) and [Student.makeStudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/master/app/models/Student.java#L150-162)
+  * The [Student.makeInstance](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/app/models/Student.java#L165-185) and [Student.makeStudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/app/models/Student.java#L150-162)
     methods provide conversion between the form data and model representations of a Student.
 
 **Review the models.**
 
-Skim through the [models package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models). 
+Skim through the [models package](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/models). 
 There should be no surprises; it parallels the form pretty closely.  Some things to note:
 
   * A Student entity contains non-primitive, complex components such as a list of Hobby entities and a list of Major entities.
@@ -105,19 +105,19 @@ There should be no surprises; it parallels the form pretty closely.  Some things
 
 **Review the views.**
 
-The [views package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views) 
-is where things get most interesting.   The [main](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/main.scala.html)
-and [index](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/index.scala.html)
+The [views package](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/views) 
+is where things get most interesting.   The [main](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/app/views/main.scala.html)
+and [index](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/app/views/index.scala.html)
 templates are pretty much what you'd expect. 
 
 Note that the main template shows how to import JQuery in case you want to use Bootstrap Javascript components.
 
-The second thing to review is the [views.bootstrap](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap)
+The second thing to review is the [views.bootstrap](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/views/bootstrap)
 subpackage, containing Bootstrap 2.x Scala templates for various form controls. Kudos to [Jason
 Pearson](https://github.com/kaeawc) to writing these templates and making other helpful changes; your t-shirt awaits.
 
-Finally, the [views.formdata](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata)
-subpackage contains the single backing class ([StudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java)) required for this application.
+Finally, the [views.formdata](https://github.com/ics-software-engineering/play-example-form/tree/play-2.1/app/views/formdata)
+subpackage contains the single backing class ([StudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/app/views/formdata/StudentFormData.java)) required for this application.
 Note that the backing class consists of public fields containing the String data to be displayed/bound in the form,
 as well as a validate() method that determines if the submitted form data is valid or not.
 
@@ -126,13 +126,13 @@ as well as a validate() method that determines if the submitted form data is val
 Testing is pretty straightforward, uses [Fluentlenium](https://github.com/FluentLenium/FluentLenium#what-is-fluentlenium-), and implements the 
 [page object pattern](https://github.com/FluentLenium/FluentLenium/wiki/Page-Object-Pattern).
 
-Start by looking at [IndexPage](https://github.com/ics-software-engineering/play-example-form/blob/master/test/tests/pages/IndexPage.java).
+Start by looking at [IndexPage](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/test/tests/pages/IndexPage.java).
 This class implements a bunch of methods to fill out the form and check to see whether the 
 displayed form contains a success or error message. Note that most of these methods depend upon
 finding an HTML element with a specific ID, and so the Bootstrap Scala templates need to make
 sure these ID fields are set correctly.
 
-The actual test code is in [ViewTest](https://github.com/ics-software-engineering/play-example-form/blob/master/test/tests/ViewTest.java).
+The actual test code is in [ViewTest](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/test/tests/ViewTest.java).
 There are four tests: one that just checks that we can retrieve the page, one that tests that
 submitting an empty form generates a validation error, one that submits a form filled out 
 from a valid Student ID, and a final one that fills out a valid form manually by using the 
@@ -140,7 +140,7 @@ IndexPage methods.
 
 Getting tests to work exposes an unfortunate library versioning issue: [HTMLUnit](http://htmlunit.sourceforge.net/) requires 
 a version of JQuery no later than 1.8.3, while recent versions of Twitter Bootstrap 
-have a Maven dependency of JQuery 1.9.0.  [Build.scala](https://github.com/ics-software-engineering/play-example-form/blob/master/project/Build.scala#L17-19)
+have a Maven dependency of JQuery 1.9.0.  [Build.scala](https://github.com/ics-software-engineering/play-example-form/blob/play-2.1/project/Build.scala#L17-19)
 illustrates how to load a newer version of Bootstrap with an older, HTMLUnit-compliant version of JQuery.
 Another solution is to use [PhantomJS](http://phantomjs.org/) rather than HTMLUnit; then you can
 use current versions of JQuery. [This fork](https://github.com/buster84/play-example-form) shows how to use PhantomJS.
@@ -172,7 +172,7 @@ Screencast
 
 Click the image below to watch a 28 minute walkthrough of this example:
 
-[<img src="https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-screencast.png" width="400">](http://www.youtube.com/watch?v=247H9NVpMME)
+[<img src="https://raw.github.com/ics-software-engineering/play-example-form/play-2.1/doc/play-example-form-screencast.png" width="400">](http://www.youtube.com/watch?v=247H9NVpMME)
 
     
 Acknowledgements
