@@ -8,7 +8,7 @@ This application provides an example of form processing with the following featu
   * Play Version 2.2
   * [WebJars](http://www.webjars.org/) to download dependencies.
   * [Twitter Bootstrap 3.0.0](http://getbootstrap.com/).
-  * Individual Twitter Bootstrap [helper templates](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap) for each form control.
+  * Individual Twitter Bootstrap [helper templates](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap3) for each form control.
   * Separation of [form backing classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) from [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
   * Validation done with [validate()](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java#L57-123), not annotations.
   * Testing with [Fluentlenium](https://github.com/FluentLenium/FluentLenium).
