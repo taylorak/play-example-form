@@ -170,9 +170,10 @@ If you see ways to solve these problems, please feel free to fork this code and 
 Screencast
 ----------
 
-Click the image below to watch a 28 minute walkthrough of this system. **Note that this screencast was created for
-a previous version of this system which used Twitter Bootstrap 2.3.2 and Play 2.1.  While the templates in the bootstrap3 package
-have been rewritten, the rest of the system remains unchanged.**
+Click the image below to watch a 28 minute walkthrough of this system. 
+
+*Note that the following screencast documents a previous version of this system which used Twitter Bootstrap 2.3.2 and Play 2.1.  While the templates in the bootstrap3 package
+have been rewritten, the rest of the system remains unchanged.*
 
 [<img src="https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-screencast.png" width="400">](http://www.youtube.com/watch?v=247H9NVpMME)
 
