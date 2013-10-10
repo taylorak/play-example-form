@@ -5,8 +5,9 @@ Overview
 
 This application provides an example of form processing with the following features:
 
+  * Play Version 2.2
   * [WebJars](http://www.webjars.org/) to download dependencies.
-  * [Twitter Bootstrap 2.3.2](http://getbootstrap.com/2.3.2/).
+  * [Twitter Bootstrap 3.0.0](http://getbootstrap.com/).
   * Individual Twitter Bootstrap [helper templates](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap) for each form control.
   * Separation of [form backing classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata) from [model classes](https://github.com/ics-software-engineering/play-example-form/tree/master/app/models).
   * Validation done with [validate()](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java#L57-123), not annotations.
@@ -23,12 +24,12 @@ The design of this example differs in two significant ways from the traditional 
      classes for database schemas. Since Play requires the backing classes for forms to have public fields,
      this separation means that model classes can have private fields, avoiding [well documented problems](http://www.manning-sandbox.com/thread.jspa?messageID=143570&#143570). 
 
-  2. **Explicit field constructors for Twitter Bootstrap 2.x.**  The canonical recommendation for users of 
-     Twitter Bootstrap 2.x is to create a single "implicit" field constructor.  The problem with this recommendation
+  2. **Explicit field constructors for Twitter Bootstrap 3.x.**  The canonical recommendation by Play developers for users of 
+     Twitter Bootstrap is to create a single "implicit" field constructor.  The problem with this recommendation
      is that a single implicit field constructor cannot satisfy all of Twitter Bootstrap's layout
      requirements for form controls (for example, multiple checkboxes). This example illustrates
      a more general solution in which normal (i.e. "explicit") scala templates (i.e. field constructors) are defined in the 
-     [views.bootstrap package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap) for each of the Twitter Bootstrap controls. IMHO, the 
+     [views.bootstrap3 package](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap3) for each of the Twitter Bootstrap controls. IMHO, the 
      code is significantly easier to understand and debug for Java-based Play framework users.  
 
 Steps to understanding the system
@@ -111,9 +112,9 @@ templates are pretty much what you'd expect.
 
 Note that the main template shows how to import JQuery in case you want to use Bootstrap Javascript components.
 
-The second thing to review is the [views.bootstrap](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap)
-subpackage, containing Bootstrap 2.x Scala templates for various form controls. Kudos to [Jason
-Pearson](https://github.com/kaeawc) to writing these templates and making other helpful changes; your t-shirt awaits.
+The second thing to review is the [views.bootstrap3](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/bootstrap3)
+subpackage, containing Bootstrap 3 Scala templates for various form controls. Kudos to [Jason
+Pearson](https://github.com/kaeawc) to writing these templates and making other helpful changes.
 
 Finally, the [views.formdata](https://github.com/ics-software-engineering/play-example-form/tree/master/app/views/formdata)
 subpackage contains the single backing class ([StudentFormData](https://github.com/ics-software-engineering/play-example-form/blob/master/app/views/formdata/StudentFormData.java)) required for this application.
@@ -169,7 +170,9 @@ If you see ways to solve these problems, please feel free to fork this code and 
 Screencast
 ----------
 
-Click the image below to watch a 28 minute walkthrough of this example:
+Click the image below to watch a 28 minute walkthrough of this system. **Note that this screencast was created for
+a previous version of this system which used Twitter Bootstrap 2.3.2 and Play 2.1.  While the templates in the bootstrap3 package
+have been rewritten, the rest of the system remains unchanged.**
 
 [<img src="https://raw.github.com/ics-software-engineering/play-example-form/master/doc/play-example-form-screencast.png" width="400">](http://www.youtube.com/watch?v=247H9NVpMME)
 
@@ -179,4 +182,5 @@ Acknowledgements
 
 This example is a descendent of the original [play-form-kludge](https://github.com/philipmjohnson/play-form-kludge/tree/original)
 and [Jason Pearson](https://github.com/kaeawc)'s [very helpful improvements](https://github.com/philipmjohnson/play-form-kludge).
+
     
