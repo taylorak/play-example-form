@@ -13,7 +13,7 @@
           <option id="@optionName" value="@optionName" @if(isSelected) {selected}>@optionName</option>
         }
       </select>
-      <p class="help-block">@help</p>
-      <p class="help-block">@{field.error.map { error => error.message }}</p>
+      <span class="help-block">@help</span>
+      <span class="help-block">@{field.error.map { error => error.message }}</span>
     </div>
   </div>
