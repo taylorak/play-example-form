@@ -5,16 +5,19 @@
   <head>
     <title>play-example-form</title>
     <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))">
-    <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap-responsive.min.css"))">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
   </head>
   <body>
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="brand" href="@routes.Application.getIndex()">play-example-form</a>
+  <div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <!--  Display three horizontal lines when navbar collapsed. -->
+          <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">play-example-form</a>
       </div>
     </div>
   </div>

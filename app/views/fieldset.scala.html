@@ -4,7 +4,7 @@
   gpa:Map[String,Boolean],
   majors:Map[String,Boolean])
 
-@import bootstrap._
+@import bootstrap3._
 
 <fieldset>
   <!-- Header -->
@@ -50,9 +50,9 @@
           true,
           "Select zero or more majors. (optional)")
 
-  <div class="control-group">
-    <div class="controls">
-      <input id="submit" type="submit" value="Submit" class="btn btn-primary">
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button id="submit" type="submit" value="Submit" class="btn btn-primary">Submit</button>
       <button id="cancel" class="btn cancel">Cancel</button>
     </div>
   </div>
