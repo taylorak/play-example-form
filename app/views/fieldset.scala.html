@@ -20,35 +20,35 @@
 
   <!-- Password -->
   @password(studentForm("password"),
-            "Password",
-            "",
-            "Password must be five or more characters. (required)")
+            label = "Password",
+            placeholder = "",
+            help = "Password must be five or more characters. (required)")
 
    <!-- Hobbies -->
   @checkboxes(studentForm("hobbies"),
-              "Hobbies",
-              hobbies,
-              "Check zero or more hobbies. (optional)")
+              label = "Hobbies",
+              checkboxMap = hobbies,
+              help = "Check zero or more hobbies. (optional)")
 
   <!-- Grade Level -->
   @radiobuttons(studentForm("level"),
-                "Level",
-                levels,
-                "Select your grade level. (required)")
+                label = "Level",
+                buttonNameList = levels,
+                help = "Select your grade level. (required)")
 
   <!-- GPA -->
   @select(studentForm("gpa"),
-          "GPA",
-          gpa,
-          false,
-          "Select your GPA. (required)")
+          label = "GPA",
+          optionMap = gpa,
+          isMultiple = false,
+          help = "Select your GPA. (required)")
 
   <!-- Majors -->
   @select(studentForm("majors"),
-          "Majors",
-          majors,
-          true,
-          "Select zero or more majors. (optional)")
+          label = "Majors",
+          optionMap = majors,
+          isMultiple = true,
+          help = "Select zero or more majors. (optional)")
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
