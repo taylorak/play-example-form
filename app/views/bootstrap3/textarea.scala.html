@@ -7,8 +7,8 @@
                 rows="@rows" 
                 id="@field.id" 
                 name="@field.name" 
-                value="@field.value.getOrElse("")"
-                placeholder="@placeholder" ></textarea>
+                placeholder="@placeholder" 
+                >@field.value.getOrElse("")</textarea>
       <span class="help-block">@help</span>
       <span class="help-block">@{field.error.map { error => error.message }}</span>
     </div>
