@@ -1,4 +1,4 @@
-@(field: Field, label: String, buttonNameList: List[String], help:String)
+@(field: Field, label: String = "CHANGEME", buttonNameList: List[String], help: String = "")
 
   <div class="form-group @if(field.hasErrors) {has-error}">
     <label class="col-sm-2 control-label" for="@field.id">@label</label>
