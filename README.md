@@ -184,4 +184,17 @@ Acknowledgements
 This example is a descendent of the original [play-form-kludge](https://github.com/philipmjohnson/play-form-kludge/tree/original)
 and [Jason Pearson](https://github.com/kaeawc)'s [very helpful improvements](https://github.com/philipmjohnson/play-form-kludge).
 
-    
+ER Design
+---------
+The ER DIagram enables users to:
+
+    * List all students who have submitted the form.
+    * Find any students with a particular: (a) hobby, (b) level, (c) gpa, or (d) major.
+    * Create a new hobby or delete an existing hobby
+    * Create a new Level or delete an existing level
+    * Create a new GPA interval or delete an existing interval
+    * Create a new major or delete an existing major.
+
+The assumption is made that hobbies and majors are optional but students can
+add more than one if they want to.
+
